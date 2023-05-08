@@ -6,23 +6,45 @@ const IndexMemory = () => {
   const [roundCount, setRound] = useState(0)
   const [correctSquares, setCorrect] = useState([])
   const [userSquares, setUser] = useState([])
+  console.log('Correct ' + correctSquares)
+  console.log('User ' + userSquares)
   const navigate = useNavigate();
-
-  if (correctSquares.length == 0) {
-
-  } else if (correctSquares.length == userSquares.length) {
-
+  if (correctSquares.length === 0) {
+    let solution = []
+    for (let i = 0; i <= roundCount; i++) {
+      solution[i] = Math.ceil(Math.random() * 25)
+    }
+    setCorrect(solution)
+    setRound(roundCount + 1)
+  } else if (correctSquares.length === userSquares.length) {
+    if (correctSquares[userSquares.length-1] === userSquares[userSquares.length-1]) {
+      setUser([])
+      setCorrect([])
+    } else {
+      return (
+        <div className='title'>
+          You have Lost
+        </div>
+      )
+    }
+  } else if (correctSquares[userSquares.length-1] !== userSquares[userSquares.length-1]) {
+    return (
+      <div className='title'>
+        You have Lost
+      </div>
+    )
   }
   const handleGoBack = () => {
     navigate('/');
   };
 
   const handleClick = (e) => {
-    setUser(userSquares.concat(e.target.id))
+    setUser(userSquares.concat(parseInt(e.target.id)))
   }
   return (
     <div>
       <h1 className="title">Sequence Memory</h1>
+      <h1 className="title">Round Count: {roundCount}</h1>
       <div className='index-button-container'>
         <button className="home-button" onClick={handleGoBack}>Home</button>
         <button className='index-button' onClick={handleClick} id={1}></button>
