@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './SequenceMemory.css';
+import './IndexMemory.css';
 
-const Game = () => {
+const IndexMemory = () => {
   const navigate = useNavigate();
 
   const handleGoBack = () => {
@@ -18,4 +18,4 @@ const Game = () => {
   );
 };
 
-export default Game;
+export default IndexMemory;

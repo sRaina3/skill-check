@@ -5,7 +5,7 @@ const App = () => {
   const navigate = useNavigate();
 
   const handleGameButtonClick = () => {
-    navigate('/Game');
+    navigate('/IndexMemory');
   };
 
   return (
