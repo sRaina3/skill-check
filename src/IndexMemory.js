@@ -10,11 +10,17 @@ const IndexMemory = () => {
   const [clickedSquare, setClickedSq] = useState(0)
 
   console.log('Correct: ' + correctSquares)
+  console.log('User' + userSquares)
   const navigate = useNavigate();
   if (correctSquares.length === 0) {
     let solution = []
     for (let i = 0; i <= roundCount; i++) {
-      solution[i] = Math.ceil(Math.random() * 25)
+      const curBut = Math.ceil(Math.random() * 25)
+      solution[i] = curBut
+      setClicked('green');
+      setClickedSq(curBut)
+      setTimeout(() => setClicked('white'), 300);
+
     }
     setCorrect(solution)
     setRound(roundCount + 1)
