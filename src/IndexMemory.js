@@ -8,31 +8,35 @@ const IndexMemory = () => {
   const [userSquares, setUser] = useState([])
   const [clickedSquareCol, setClicked] = useState('white')
   const [clickedSquare, setClickedSq] = useState(0)
+  const [roundChange, setRoundChange] = useState(true)
 
-  console.log('Correct: ' + correctSquares)
-  console.log('User' + userSquares)
   const navigate = useNavigate();
-  if (correctSquares.length === 0) {
-    let solution = []
-    for (let i = 0; i <= roundCount; i++) {
-      const curBut = Math.ceil(Math.random() * 25)
-      solution[i] = curBut
-      setClicked('green');
-      setClickedSq(curBut)
-      setTimeout(() => setClicked('white'), 300);
-
-    }
-    setCorrect(solution)
+  
+  if (roundChange) {
+    setRoundChange(false)
+    const curBut = Math.ceil(Math.random() * 25)
+    setCorrect(correctSquares.concat(curBut))
+    setClicked('green');
+    setClickedSq(curBut)
+    setTimeout(() => setClicked('white'), 300);
     setRound(roundCount + 1)
   } else if (correctSquares.length === userSquares.length) {
     if (correctSquares[userSquares.length-1] === userSquares[userSquares.length-1]) {
       setUser([])
-      setCorrect([])
+      setRoundChange(true)
     } else {
-      
+      return (
+        <div>
+          <h1 className='title'>You Lost</h1>
+        </div>
+      )
     }
   } else if (correctSquares[userSquares.length-1] !== userSquares[userSquares.length-1]) {
-    
+    return (
+      <div>
+        <h1 className='title'>You Lost</h1>
+      </div>
+    )
   }
   const handleGoBack = () => {
     navigate('/');
