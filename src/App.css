@@ -57,3 +57,8 @@ body {
 .mode-button:hover {
   opacity: 0.8;
 }
+
+.fiery-border {
+  box-shadow: 0 0 50px #ff4500; /* add some shadow for more effect */
+  transition: all 0.2s ease-in-out; /* add a smooth transition effect */
+}

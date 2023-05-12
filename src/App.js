@@ -28,8 +28,8 @@ const App = () => {
       <button className="game-button" onClick={handleGameButtonClick}>Sequence Memory</button>
       <div>
         <h1 className="title-text">Select Mode</h1>
-        <button className="mode-button normal" onClick={handleNormalMode}>Normal</button>
-        <button className="mode-button challenge" onClick={handleChallengeMode}>Challenge</button>
+        <button className={`mode-button normal ${difficulty === 'normal' ? 'fiery-border' : ''}`} onClick={handleNormalMode}>Normal</button>
+        <button className={`mode-button challenge ${difficulty === 'challenge' ? 'fiery-border' : ''}`} onClick={handleChallengeMode}>Challenge</button>
       </div>
     </div>
   )
