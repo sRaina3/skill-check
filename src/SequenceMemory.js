@@ -11,36 +11,21 @@ const SequenceMemory = () => {
   const [roundChange, setRoundChange] = useState(true)
 
   const navigate = useNavigate();
-  
-  if (roundChange) {
-    setRoundChange(false)
-    const curBut = Math.ceil(Math.random() * 25)
-    setCorrect(correctSquares.concat(curBut))
-    setClicked('green');
-    setClickedSq(curBut)
-    setTimeout(() => setClicked('white'), 300);
-    setRound(roundCount + 1)
-  } else if (correctSquares.length === userSquares.length) {
-    if (correctSquares[userSquares.length-1] === userSquares[userSquares.length-1]) {
-      setUser([])
-      setRoundChange(true)
-    } else {
-      return (
-        <div>
-          <h1 className='title'>You Lost</h1>
-        </div>
-      )
-    }
-  } else if (correctSquares[userSquares.length-1] !== userSquares[userSquares.length-1]) {
-    return (
-      <div>
-        <h1 className='title'>You Lost</h1>
-      </div>
-    )
-  }
+
+  const delay = ms => new Promise(
+    resolve => setTimeout(resolve, ms)
+  );
+
   const handleGoBack = () => {
     navigate('/');
   };
+
+  const handleTryAgain = () => {
+    setCorrect([])
+    setUser([])
+    setRound(0)
+    setRoundChange(true)
+  }
 
   const handleClick = (e) => {
     setUser(userSquares.concat(parseInt(e.target.id)))
@@ -48,6 +33,37 @@ const SequenceMemory = () => {
     setClickedSq(parseInt(e.target.id))
     setTimeout(() => setClicked('white'), 300);
   }
+
+  delay(300).then(() => {
+    if (roundChange) {
+      setRoundChange(false)
+      const curBut = Math.ceil(Math.random() * 25)
+      setCorrect(correctSquares.concat(curBut))
+      setClicked('green');
+      setClickedSq(curBut)
+      setTimeout(() => setClicked('white'), 300);
+      setRound(roundCount + 1)
+    } else if (correctSquares.length === userSquares.length) {
+      if (correctSquares[userSquares.length-1] === userSquares[userSquares.length-1]) {
+        setUser([])
+        setRoundChange(true)
+      } else {
+        return (
+          <div>
+            <h1 className='title'>You Lost</h1>
+            <button className="home-button" onClick={handleTryAgain}>Try Again</button>
+          </div>
+        )
+      }
+    } else if (correctSquares[userSquares.length-1] !== userSquares[userSquares.length-1]) {
+      return (
+        <div>
+          <h1 className='title'>You Lost</h1>
+          <button className="home-button" onClick={handleTryAgain}>Try Again</button>
+        </div>
+      )
+    }
+  })
   return (
     <div>
       <h1 className="title">Sequence Memory</h1>
