@@ -62,7 +62,7 @@ const SequenceMemoryChal = () => {
   return (
     <div>
       <h1 className="title">Sequence Memory</h1>
-      <h1 className="title">Round Count: {roundCount}</h1>
+      <h1 className="title">Score: {roundCount}</h1>
       <button className="home-button" onClick={handleGoBack}>Home</button>
       <div className='seq-button-chal-container'>
         <button className="seq-chal-button" style={clickedSquare === 1 ? {backgroundColor: clickedSquareCol} : {}} id={1} onClick={handleClick}></button>
