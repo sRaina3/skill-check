@@ -12,10 +12,6 @@ const SequenceMemory = () => {
 
   const navigate = useNavigate();
 
-  const delay = ms => new Promise(
-    resolve => setTimeout(resolve, ms)
-  );
-
   const handleGoBack = () => {
     navigate('/');
   };
@@ -34,28 +30,19 @@ const SequenceMemory = () => {
     setTimeout(() => setClicked('white'), 300);
   }
 
-  delay(300).then(() => {
-    if (roundChange) {
-      setRoundChange(false)
-      const curBut = Math.ceil(Math.random() * 25)
-      setCorrect(correctSquares.concat(curBut))
-      setClicked('green');
-      setClickedSq(curBut)
-      setTimeout(() => setClicked('white'), 300);
-      setRound(roundCount + 1)
-    } else if (correctSquares.length === userSquares.length) {
-      if (correctSquares[userSquares.length-1] === userSquares[userSquares.length-1]) {
-        setUser([])
-        setRoundChange(true)
-      } else {
-        return (
-          <div>
-            <h1 className='title'>You Lost</h1>
-            <button className="home-button" onClick={handleTryAgain}>Try Again</button>
-          </div>
-        )
-      }
-    } else if (correctSquares[userSquares.length-1] !== userSquares[userSquares.length-1]) {
+  if (clickedSquareCol === 'white' && roundChange) {
+    setRoundChange(false)
+    const curBut = Math.ceil(Math.random() * 25)
+    setCorrect(correctSquares.concat(curBut))
+    setClicked('green');
+    setClickedSq(curBut)
+    setTimeout(() => setClicked('white'), 300);
+    setRound(roundCount + 1)
+  } else if (correctSquares.length === userSquares.length) {
+    if (correctSquares[userSquares.length-1] === userSquares[userSquares.length-1]) {
+      setUser([])
+      setRoundChange(true)
+    } else {
       return (
         <div>
           <h1 className='title'>You Lost</h1>
@@ -63,13 +50,21 @@ const SequenceMemory = () => {
         </div>
       )
     }
-  })
+  } else if (correctSquares[userSquares.length-1] !== userSquares[userSquares.length-1]) {
+    return (
+      <div>
+        <h1 className='title'>You Lost</h1>
+        <button className="home-button" onClick={handleTryAgain}>Try Again</button>
+      </div>
+    )
+  }
+
   return (
     <div>
       <h1 className="title">Sequence Memory</h1>
       <h1 className="title">Round Count: {roundCount}</h1>
+      <button className="home-button" onClick={handleGoBack}>Home</button>
       <div className='seq-button-container'>
-        <button className="home-button" onClick={handleGoBack}>Home</button>
         <button className="seq-button" style={clickedSquare === 1 ? {backgroundColor: clickedSquareCol} : {}} id={1} onClick={handleClick}></button>
         <button className="seq-button" style={clickedSquare === 2 ? {backgroundColor: clickedSquareCol} : {}} id={2} onClick={handleClick}></button>
         <button className="seq-button" style={clickedSquare === 3 ? {backgroundColor: clickedSquareCol} : {}} id={3} onClick={handleClick}></button>
