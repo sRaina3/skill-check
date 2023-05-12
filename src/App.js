@@ -1,19 +1,25 @@
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import './App.css';
 
 const App = () => {
   const navigate = useNavigate();
+  const [difficulty, setDifficulty] = useState('normal')
 
   const handleGameButtonClick = () => {
-    navigate('/SequenceMemory');
+    if (difficulty === 'normal') {
+      navigate('/SequenceMemoryNorm');
+    } else {
+      navigate('/SequenceMemoryChal');
+    }
   };
 
   const handleNormalMode = () => {
-
+    setDifficulty('normal')
   }
 
   const handleChallengeMode = () => {
-
+    setDifficulty('challenge')
   }
 
   return (
