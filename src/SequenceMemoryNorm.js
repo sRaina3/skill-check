@@ -62,7 +62,7 @@ const SequenceMemoryNorm = () => {
   return (
     <div>
       <h1 className="title">Sequence Memory</h1>
-      <h1 className="title">Score: {roundCount}</h1>
+      <h1 className="title">Score: {roundCount - 1}</h1>
       <button className="home-button" onClick={handleGoBack}>Home</button>
       <div className='seq-button-norm-container'>
         <button className="seq-norm-button" style={clickedSquare === 1 ? {backgroundColor: clickedSquareCol} : {}} id={1} onClick={handleClick}></button>
