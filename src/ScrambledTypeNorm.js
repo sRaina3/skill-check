@@ -1,10 +1,25 @@
-import {useState} from 'react'
+// API Used: https://github.com/lukePeavey/quotable
+import {useState, useEffect} from 'react'
+import axios from 'axios'
+
+import './ScrambledType.css'
 
 const ScrambledTypeNorm = () => {
   const keyboardKeys = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", 
                         "s", "d", "f", "g", "h", "j", "k", "l", "z", "x", "c", "v", "b", "n", "m"];
 
   const [scrambledKeys, setScrambled] = useState([...keyboardKeys])
+  const [displayText, setDisplayText] = useState()
+
+  useEffect(() => {
+    axios
+      .get('https://api.quotable.io/random')
+      .then(response => {
+        console.log('Got response')
+        console.log(response.data.content)
+        setDisplayText(response.data.content.toLowerCase())
+      })
+  }, [])
 
   // Fisher-Yates Shuffle Algo
   const shuffleArray = (array) => {
@@ -21,8 +36,11 @@ const ScrambledTypeNorm = () => {
   }
 
   return (
-    <div className="keyboard">
-      {scrambledKeys.map(key => <button key={key} onClick={() => handleKeyPress(key)}>{key}</button>)}
+    <div className='text'>
+      <h1>{displayText}</h1>
+      <div className="keyboard">
+        {scrambledKeys.map(key => <button key={key} onClick={() => handleKeyPress(key)}>{key}</button>)}
+      </div>
     </div>
   )
 }
