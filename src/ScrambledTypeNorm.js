@@ -10,12 +10,19 @@ const ScrambledTypeNorm = () => {
 
   const [scrambledKeys, setScrambled] = useState([...keyboardKeys])
   const [displayText, setDisplayText] = useState()
+  const [timeTaken, setTimeTaken] = useState(100)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeTaken(timeTaken => timeTaken - 1)
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     axios
       .get('https://api.quotable.io/random')
       .then(response => {
-        console.log('Got response')
         console.log(response.data.content)
         setDisplayText(response.data.content.toLowerCase())
       })
@@ -37,6 +44,7 @@ const ScrambledTypeNorm = () => {
 
   return (
     <div>
+      <h1 className='text'>{timeTaken}</h1>
       <h1 className='text'>{displayText}</h1>
       <div className="keyboard">
         {scrambledKeys.map(key => <button key={key} onClick={() => handleKeyPress(key)}>{key}</button>)}
