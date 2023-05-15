@@ -21,7 +21,7 @@ const ScrambledTypeNorm = () => {
 
   useEffect(() => {
     axios
-      .get('https://api.quotable.io/random')
+      .get('https://api.quotable.io/random?maxLength=30')
       .then(response => {
         console.log(response.data.content)
         setDisplayText(response.data.content.toLowerCase())
