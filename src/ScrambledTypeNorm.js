@@ -5,8 +5,8 @@ import axios from 'axios'
 import './ScrambledType.css'
 
 const ScrambledTypeNorm = () => {
-  const keyboardKeys = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", 
-                        "s", "d", "f", "g", "h", "j", "k", "l", "z", "x", "c", "v", "b", "n", "m"];
+  const keyboardKeys = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", "s", "d", "f", "g", "h", 
+                        "j", "k", "l", "'", "z", "x", "c", "v", "b", "n", "m", ",", ".", '-'];
 
   const [scrambledKeys, setScrambled] = useState([...keyboardKeys])
   const [displayText, setDisplayText] = useState()
@@ -36,8 +36,8 @@ const ScrambledTypeNorm = () => {
   }
 
   return (
-    <div className='text'>
-      <h1>{displayText}</h1>
+    <div>
+      <h1 className='text'>{displayText}</h1>
       <div className="keyboard">
         {scrambledKeys.map(key => <button key={key} onClick={() => handleKeyPress(key)}>{key}</button>)}
       </div>
