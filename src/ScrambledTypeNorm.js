@@ -9,7 +9,8 @@ const ScrambledTypeNorm = () => {
                         "j", "k", "l", "'", "z", "x", "c", "v", "b", "n", "m", ",", ".", '-'];
 
   const [scrambledKeys, setScrambled] = useState([...keyboardKeys])
-  const [displayText, setDisplayText] = useState()
+  const [displayText, setDisplayText] = useState('')
+  const [curIndex, setCurIndex] = useState(0)
   const [timeTaken, setTimeTaken] = useState(100)
 
   useEffect(() => {
@@ -21,7 +22,7 @@ const ScrambledTypeNorm = () => {
 
   useEffect(() => {
     axios
-      .get('https://api.quotable.io/random?maxLength=30')
+      .get('https://api.quotable.io/random?maxLength=40')
       .then(response => {
         console.log(response.data.content)
         setDisplayText(response.data.content.toLowerCase())
@@ -40,17 +41,32 @@ const ScrambledTypeNorm = () => {
   const handleKeyPress = (key) => {
     shuffleArray(keyboardKeys);
     setScrambled([...keyboardKeys]);
+    if (key === displayText[curIndex]) { 
+      setCurIndex(curIndex + 1)
+    }
   }
 
-  return (
-    <div>
-      <h1 className='text'>{timeTaken}</h1>
-      <h1 className='text'>{displayText}</h1>
-      <div className="keyboard">
-        {scrambledKeys.map(key => <button key={key} onClick={() => handleKeyPress(key)}>{key}</button>)}
+  if (timeTaken > -1) {
+    return (
+      <div>
+        <h1 className='text'>{timeTaken}</h1>
+        <h1 className='text'>
+          {displayText.split('').map((char, index) => (
+            <span key={index} className={index === curIndex ? 'highlight' : ''}>{char}</span>
+          ))}
+        </h1>
+        <div className="keyboard">
+          {scrambledKeys.map(key => <button key={key} onClick={() => handleKeyPress(key)}>{key}</button>)}
+        </div>
       </div>
-    </div>
-  )
+    )
+  } else {
+    return (
+      <div className='text'>
+        You Lose
+      </div>
+    )
+  }
 }
 
 export default ScrambledTypeNorm

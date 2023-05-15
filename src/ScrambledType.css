@@ -30,3 +30,11 @@
   cursor: pointer;
   background-color: #e2e2e2;
 }
+
+.active {
+  background-color: #ffc107;
+}
+
+.highlight {
+  color: rgb(0, 209, 205);
+}
