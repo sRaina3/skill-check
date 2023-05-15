@@ -4,7 +4,7 @@ const ScrambledTypeNorm = () => {
   const keyboardKeys = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", 
                         "s", "d", "f", "g", "h", "j", "k", "l", "z", "x", "c", "v", "b", "n", "m"];
 
-  const [scrambledKeys, setScrambled] = useState(...keyboardKeys)
+  const [scrambledKeys, setScrambled] = useState([...keyboardKeys])
 
   // Fisher-Yates Shuffle Algo
   const shuffleArray = (array) => {
@@ -15,9 +15,14 @@ const ScrambledTypeNorm = () => {
     return array;
   }
 
-  return (
-    <div>
+  const handleKeyPress = (key) => {
+    shuffleArray(keyboardKeys);
+    setScrambled([...keyboardKeys]);
+  }
 
+  return (
+    <div className="keyboard">
+      {scrambledKeys.map(key => <button key={key} onClick={() => handleKeyPress(key)}>{key}</button>)}
     </div>
   )
 }
