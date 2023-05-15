@@ -1,5 +1,6 @@
 // API Used: https://github.com/lukePeavey/quotable
 import {useState, useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
 import './ScrambledType.css'
@@ -13,6 +14,23 @@ const ScrambledTypeNorm = () => {
   const [curIndex, setCurIndex] = useState(0)
   const [timeTaken, setTimeTaken] = useState(60)
 
+  const navigate = useNavigate();
+
+  const handleGoBack = () => {
+    navigate('/');
+  };
+
+  const handleTryAgain = () => {
+    setCurIndex(0)
+    setTimeTaken(60)
+    axios
+      .get('https://api.quotable.io/random?maxLength=35')
+      .then(response => {
+        console.log(response.data.content)
+        setDisplayText(response.data.content.toLowerCase())
+      })
+  }
+
   useEffect(() => {
     const interval = setInterval(() => {
       if (curIndex < displayText.length) {
@@ -24,7 +42,7 @@ const ScrambledTypeNorm = () => {
 
   useEffect(() => {
     axios
-      .get('https://api.quotable.io/random?maxLength=40')
+      .get('https://api.quotable.io/random?maxLength=35')
       .then(response => {
         console.log(response.data.content)
         setDisplayText(response.data.content.toLowerCase())
@@ -48,15 +66,17 @@ const ScrambledTypeNorm = () => {
     }
   }
 
-  if (curIndex >= displayText.length) {
+  if (displayText.length !== 0 && curIndex >= displayText.length) {
     return (
       <div className='text'>
+        <button className="home-button" onClick={handleTryAgain}>Play Again</button>
         You Won with {timeTaken} seconds left!
       </div>
     )
   } else if (timeTaken > -1) {
     return (
       <div>
+        <button className="home-button" onClick={handleGoBack}>Home</button>
         <h1 className='text'>{timeTaken}</h1>
         <h1 className='text'>
           {displayText.split('').map((char, index) => (
@@ -74,6 +94,7 @@ const ScrambledTypeNorm = () => {
   } else {
     return (
       <div className='text'>
+        <button className="home-button" onClick={handleTryAgain}>Try Again</button>
         You Lose
       </div>
     )
