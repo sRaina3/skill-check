@@ -6,13 +6,17 @@ const App = () => {
   const navigate = useNavigate();
   const [difficulty, setDifficulty] = useState('normal')
 
-  const handleGameButtonClick = () => {
+  const handleSeq = () => {
     if (difficulty === 'normal') {
-      navigate('/SequenceMemoryNorm');
+      navigate('/SequenceMemoryNorm')
     } else {
-      navigate('/SequenceMemoryChal');
+      navigate('/SequenceMemoryChal')
     }
   };
+
+  const handleType = () => {
+    navigate('/ScrambledTypeNorm')
+  }
 
   const handleNormalMode = () => {
     setDifficulty('normal')
@@ -25,7 +29,8 @@ const App = () => {
   return (
     <div className="title-screen">
       <h1 className="title-text">Choose a Game</h1>
-      <button className="game-button" onClick={handleGameButtonClick}>Sequence Memory</button>
+      <button className="game-button" onClick={handleSeq}>Sequence Memory</button>
+      <button className="game-button" onClick={handleType}>Scrambled Type Test</button>
       <div>
         <h1 className="title-text">Select Mode</h1>
         <button className={`mode-button normal ${difficulty === 'normal' ? 'fiery-border' : ''}`} onClick={handleNormalMode}>Normal</button>
