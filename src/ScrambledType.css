@@ -16,9 +16,28 @@
   border-radius: 10px;
 }
 
+.spacebar {
+  display: grid;
+  justify-items: center;
+  margin: 20px;
+  background-color: #ccbcbc;
+  padding: 10px;
+  border-radius: 10px;
+}
+
 .keyboard button {
   font-size: 24px;
   width: 50px;
+  height: 50px;
+  border: none;
+  background-color: #dfdada;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.spacebar button {
+  font-size: 24px;
+  width: 800px;
   height: 50px;
   border: none;
   background-color: #dfdada;

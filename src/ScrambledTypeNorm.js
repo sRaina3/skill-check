@@ -11,14 +11,16 @@ const ScrambledTypeNorm = () => {
   const [scrambledKeys, setScrambled] = useState([...keyboardKeys])
   const [displayText, setDisplayText] = useState('')
   const [curIndex, setCurIndex] = useState(0)
-  const [timeTaken, setTimeTaken] = useState(100)
+  const [timeTaken, setTimeTaken] = useState(60)
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTimeTaken(timeTaken => timeTaken - 1)
+      if (curIndex < displayText.length) {
+        setTimeTaken(timeTaken => timeTaken - 1)
+      }
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [curIndex, displayText]);
 
   useEffect(() => {
     axios
@@ -46,7 +48,13 @@ const ScrambledTypeNorm = () => {
     }
   }
 
-  if (timeTaken > -1) {
+  if (curIndex >= displayText.length) {
+    return (
+      <div className='text'>
+        You Won with {timeTaken} seconds left!
+      </div>
+    )
+  } else if (timeTaken > -1) {
     return (
       <div>
         <h1 className='text'>{timeTaken}</h1>
@@ -57,6 +65,9 @@ const ScrambledTypeNorm = () => {
         </h1>
         <div className="keyboard">
           {scrambledKeys.map(key => <button key={key} onClick={() => handleKeyPress(key)}>{key}</button>)}
+        </div>
+        <div className="spacebar">
+          <button key={' '} onClick={() => handleKeyPress(' ')}> </button>
         </div>
       </div>
     )
