@@ -1,15 +1,15 @@
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState} from 'react';
 import './App.css';
+import Login from './Login';
 
-const App = () => {
+const App = ({user}) => {
   const navigate = useNavigate();
   const [difficulty, setDifficulty] = useState('normal')
-
-  const handleLogin = () => {
-    navigate('/Login')
+  const [userAccount, setUserAccount] = useState({name: 'Guest', password: ''})
+  if (user != null) {
+    setUserAccount(user)
   }
-
   const handleSignUp = () => {
     navigate('/Signup')
   }
@@ -36,8 +36,9 @@ const App = () => {
 
   return (
     <div className="title-screen">
+      <p className="corner-text">Welcome {userAccount.name}!</p>
       <h1 className="title-text">Choose a Game</h1>
-      <button className="login-button" onClick={handleLogin}>Log In</button>
+      <Login userAccSetter={setUserAccount}/>
       <button className="signup-button" onClick={handleSignUp}>Sign Up</button>
       <button className="game-button" onClick={handleSeq}>Sequence Memory</button>
       <button className="game-button" onClick={handleType}>Scrambled Type Test</button>

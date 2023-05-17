@@ -33,7 +33,7 @@ const SignUp = () => {
               setUser('')
               setPass('')
               setDisplayPassword('')
-              navigate('/Login')
+              navigate('/')
             })
         }
       })

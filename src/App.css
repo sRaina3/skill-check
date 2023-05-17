@@ -90,3 +90,11 @@ body {
   border: none;
   cursor: pointer;
 }
+
+.corner-text {
+  color: white;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  font-size: 24px;
+}
