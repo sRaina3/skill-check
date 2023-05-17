@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import userService from './services/UserService'
 
 const SignUp = () => {
   const [username, setUser] = useState('')
   const [password, setPass] = useState('')
+  const [displayPassword, setDisplayPassword] = useState('')
 
   const navigate = useNavigate();
   
@@ -13,6 +15,16 @@ const SignUp = () => {
 
   const addLogin = (e) => {
     e.preventDefault()
+    const newUser = {
+      name: username,
+      key: password
+    }
+    userService.addUser(newUser)
+      .then(addedUser => {
+        setUser('')
+        setPass('')
+        setDisplayPassword('')
+      })
   }
 
   const usernameUpdate = (e) => {
@@ -20,7 +32,17 @@ const SignUp = () => {
   }
 
   const passwordUpdate = (e) => {
-    setPass(e.target.value)
+    if (e.target.value.length > password.length) {
+      setPass(password + e.target.value.charAt(e.target.value.length - 1))
+    } else {
+      setPass(password.substring(0, password.length - 1))
+    }
+
+    let displayed = ''
+    for (let i = 0; i < e.target.value.length; i++) {
+      displayed += '*'
+    }
+    setDisplayPassword(displayed)
   }
 
   return (
@@ -29,7 +51,7 @@ const SignUp = () => {
       <form onSubmit={addLogin}>
         <div>
           <div>Enter Username: <input value={username} onChange={usernameUpdate}/></div>
-          <div>Enter Password: <input value={password} onChange={passwordUpdate}/></div>
+          <div>Enter Password: <input value={displayPassword} onChange={passwordUpdate}/></div>
         </div>
         <div>
           <button type="submit">add</button>

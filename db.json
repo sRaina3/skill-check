@@ -1,9 +1,14 @@
 {
   "logins": [
     {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
+      "name": "Testa",
+      "key": "mypass",
+      "id": 1
+    },
+    {
+      "name": "",
+      "key": "realjoebslap",
+      "id": 2
     }
   ]
 }
