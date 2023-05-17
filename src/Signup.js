@@ -20,6 +20,7 @@ const SignUp = () => {
     userService.getUsers()
       .then(users => {
         console.log(username)
+        console.log(users)
         console.log(users.filter(u => u.name === username).length)
         if (users.filter(u => u.name === username).length === 1) {
           setDisplayMessage("This Username Already Exists")
