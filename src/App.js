@@ -6,6 +6,10 @@ const App = () => {
   const navigate = useNavigate();
   const [difficulty, setDifficulty] = useState('normal')
 
+  const handleLogin = () => {
+    navigate('/Login')
+  }
+  
   const handleSeq = () => {
     if (difficulty === 'normal') {
       navigate('/SequenceMemoryNorm')
@@ -29,6 +33,7 @@ const App = () => {
   return (
     <div className="title-screen">
       <h1 className="title-text">Choose a Game</h1>
+      <button className="home-button" onClick={handleLogin}>Log In</button>
       <button className="game-button" onClick={handleSeq}>Sequence Memory</button>
       <button className="game-button" onClick={handleType}>Scrambled Type Test</button>
       <div>
