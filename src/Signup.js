@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import userService from './services/UserService'
+import Message from './services/Message';
 
 const SignUp = () => {
   const [username, setUser] = useState('')
   const [password, setPass] = useState('')
   const [displayPassword, setDisplayPassword] = useState('')
+  const [displayMessage, setDisplayMessage] = useState('Please Sign Up')
 
   const navigate = useNavigate();
   
@@ -15,16 +17,27 @@ const SignUp = () => {
 
   const addLogin = (e) => {
     e.preventDefault()
-    const newUser = {
-      name: username,
-      key: password
-    }
-    userService.addUser(newUser)
-      .then(addedUser => {
-        setUser('')
-        setPass('')
-        setDisplayPassword('')
+    userService.getUsers()
+      .then(users => {
+        console.log(username)
+        console.log(users.filter(u => u.name === username).length)
+        if (users.filter(u => u.name === username).length === 1) {
+          setDisplayMessage("This Username Already Exists")
+        } else {
+          const newUser = {
+            name: username,
+            key: password
+          }
+          userService.addUser(newUser)
+            .then(addedUser => {
+              setUser('')
+              setPass('')
+              setDisplayPassword('')
+              navigate('/Login')
+            })
+        }
       })
+
   }
 
   const usernameUpdate = (e) => {
@@ -47,6 +60,7 @@ const SignUp = () => {
 
   return (
     <div className='title-text'>
+      <Message message={displayMessage}/>
       <button className="home-button" onClick={handleGoBack}>Home</button>
       <form onSubmit={addLogin}>
         <div>
