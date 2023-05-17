@@ -10,6 +10,11 @@ const addUser = (newUser) => {
   return request.then(response => response.data)
 }
 
-const userService = {getUsers, addUser}
+const curUser = (thisUser) => {
+  const request = axios.post('http://localhost:3001/user', thisUser)
+  return request.then(response => response.data)
+}
+
+const userService = {getUsers, addUser, curUser}
 
 export default userService

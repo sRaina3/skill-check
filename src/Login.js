@@ -23,14 +23,21 @@ const Login = () => {
     e.preventDefault()
     userService.getUsers()
       .then(users => {
-        setUser('')
-        setPass('')
-        setDisplayPassword('')
         if (users.filter(u => u.name === username && u.key === password).length === 1) {
-          navigate('/')
+          const newUser = {
+            name: username,
+            key: password
+          }
+          userService.curUser(newUser)
+            .then(user => {
+              navigate('/')
+            })
         } else {
           setDisplayMessage('Wrong log in info dumbass, or maybe you forgor to signup?')
         }
+        setUser('')
+        setPass('')
+        setDisplayPassword('')
       })
   }
 
