@@ -62,3 +62,31 @@ body {
   box-shadow: 0 0 50px #ff4500; /* add some shadow for more effect */
   transition: all 0.2s ease-in-out; /* add a smooth transition effect */
 }
+
+.login-button {
+  position: absolute;
+  top: 20px;
+  right: 150px;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  color: #333;
+  border: none;
+  cursor: pointer;
+}
+
+.signup-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  color: #333;
+  border: none;
+  cursor: pointer;
+}

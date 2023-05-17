@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const SignUp = () => {
   const [username, setUser] = useState('')
   const [password, setPass] = useState('')
 
@@ -11,7 +11,7 @@ const Login = () => {
     navigate('/');
   };
 
-  const attemptLogin = (e) => {
+  const addLogin = (e) => {
     e.preventDefault()
   }
 
@@ -26,7 +26,7 @@ const Login = () => {
   return (
     <div className='title-text'>
       <button className="home-button" onClick={handleGoBack}>Home</button>
-      <form onSubmit={attemptLogin}>
+      <form onSubmit={addLogin}>
         <div>
           <div>Enter Username: <input value={username} onChange={usernameUpdate}/></div>
           <div>Enter Password: <input value={password} onChange={passwordUpdate}/></div>
@@ -39,4 +39,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default SignUp
