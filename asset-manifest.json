@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/skill-check/static/css/main.499ebdf5.css",
-    "main.js": "/skill-check/static/js/main.5ff56e0c.js",
-    "index.html": "/skill-check/index.html",
-    "main.499ebdf5.css.map": "/skill-check/static/css/main.499ebdf5.css.map",
-    "main.5ff56e0c.js.map": "/skill-check/static/js/main.5ff56e0c.js.map"
+    "main.css": "/skill-check/skill-check-frontend/static/css/main.499ebdf5.css",
+    "main.js": "/skill-check/skill-check-frontend/static/js/main.56fbe200.js",
+    "index.html": "/skill-check/skill-check-frontend/index.html",
+    "main.499ebdf5.css.map": "/skill-check/skill-check-frontend/static/css/main.499ebdf5.css.map",
+    "main.56fbe200.js.map": "/skill-check/skill-check-frontend/static/js/main.56fbe200.js.map"
   },
   "entrypoints": [
     "static/css/main.499ebdf5.css",
-    "static/js/main.5ff56e0c.js"
+    "static/js/main.56fbe200.js"
   ]
 }
