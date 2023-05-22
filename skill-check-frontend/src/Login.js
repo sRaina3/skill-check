@@ -27,13 +27,14 @@ const Login = () => {
     userService.getUsers()
       .then(users => {
         console.log(users)
-        if (users.filter(u => u.username === username && u.password === password).length === 1) {
+        if (users.filter(u => u.username === username && u.password === password).length !== 0) {
           const newUser = {
             username: username,
             passwrd: password
           }
           // Save the user account in local storage
           localStorage.setItem('userAccount', JSON.stringify(newUser));
+          navigate('/')
         } else {
           setDisplayMessage('Wrong log in info dumbass, or maybe you forgor to signup?')
         }
