@@ -6,10 +6,8 @@ import Login from './Login';
 const App = ({user}) => {
   const navigate = useNavigate();
   const [difficulty, setDifficulty] = useState('normal')
-  const [userAccount, setUserAccount] = useState({name: 'Guest', password: ''})
-  if (user != null) {
-    setUserAccount(user)
-  }
+  const [userAccount, setUserAccount] = useState({username: 'Guest', password: ''})
+
   const handleSignUp = () => {
     navigate('/Signup')
   }
@@ -36,7 +34,7 @@ const App = ({user}) => {
 
   return (
     <div className="title-screen">
-      <p className="corner-text">Welcome {userAccount.name}!</p>
+      <p className="corner-text">Welcome {userAccount.username}!</p>
       <h1 className="title-text">Choose a Game</h1>
       <Login userAccSetter={setUserAccount}/>
       <button className="signup-button" onClick={handleSignUp}>Sign Up</button>

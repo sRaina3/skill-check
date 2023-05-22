@@ -1,13 +1,13 @@
 import axios from 'axios'
-const baseURL = ''
+const baseURL = 'https://skillcheck-backend.onrender.com/'
 
 const getUsers = () => {
-  const request = axios.get(baseURL + 'https://sraina3.github.io/Logins/db.json')
+  const request = axios.get(baseURL + 'api/users')
   return request.then(response => response.data)
 }
 
 const addUser = (newUser) => {
-  const request = axios.post(baseURL + 'https://sraina3.github.io/Logins/db.json', newUser)
+  const request = axios.post(baseURL + 'api/users', newUser)
   return request.then(response => response.data)
 }
 

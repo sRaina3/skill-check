@@ -21,13 +21,13 @@ const SignUp = () => {
       .then(users => {
         console.log(username)
         console.log(users)
-        console.log(users.filter(u => u.name === username).length)
-        if (users.filter(u => u.name === username).length === 1) {
+        console.log(users.filter(u => u.username === username).length)
+        if (users.filter(u => u.username === username).length === 1) {
           setDisplayMessage("This Username Already Exists")
         } else {
           const newUser = {
-            name: username,
-            key: password
+            username: username,
+            password: password
           }
           userService.addUser(newUser)
             .then(addedUser => {
@@ -69,7 +69,7 @@ const SignUp = () => {
           <div>Enter Password: <input value={displayPassword} onChange={passwordUpdate}/></div>
         </div>
         <div>
-          <button type="submit">add</button>
+          <button type="submit">Sign Up</button>
         </div>
       </form>
     </div>

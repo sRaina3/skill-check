@@ -22,12 +22,15 @@ const Login = ({userAccSetter}) => {
 
   const attemptLogin = (e) => {
     e.preventDefault()
+    console.log(username)
+    console.log(password)
     userService.getUsers()
       .then(users => {
-        if (users.filter(u => u.name === username && u.key === password).length === 1) {
+        console.log(users)
+        if (users.filter(u => u.username === username && u.password === password).length === 1) {
           const newUser = {
-            name: username,
-            key: password
+            username: username,
+            passwrd: password
           }
           userAccSetter(newUser)
           setLoginAttempt(false)
@@ -69,7 +72,7 @@ const Login = ({userAccSetter}) => {
             <div>Enter Password: <input value={displayPassword} onChange={passwordUpdate}/></div>
           </div>
           <div className="title-text">
-            <button type="submit">add</button>
+            <button type="submit">Log In</button>
           </div>
         </form>
       </div>
