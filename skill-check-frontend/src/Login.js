@@ -2,22 +2,22 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import userService from './services/UserService';
 import Message from './services/Message';
+import './Login.css'
 
-const Login = ({userAccSetter}) => {
+const Login = () => {
   const [username, setUser] = useState('')
   const [password, setPass] = useState('')
   const [displayPassword, setDisplayPassword] = useState('')
   const [displayMessage, setDisplayMessage] = useState('Please Log In')
-  const [loginAttempt, setLoginAttempt] = useState(false)
 
   const navigate = useNavigate();
 
+  const handleGoBack = () => {
+    navigate('/');
+  };
+  
   const handleSignUp = () => {
     navigate('/Signup')
-  }
-
-  const handleLogin = () => {
-    setLoginAttempt(true)
   }
 
   const attemptLogin = (e) => {
@@ -32,8 +32,8 @@ const Login = ({userAccSetter}) => {
             username: username,
             passwrd: password
           }
-          userAccSetter(newUser)
-          setLoginAttempt(false)
+          // Save the user account in local storage
+          localStorage.setItem('userAccount', JSON.stringify(newUser));
         } else {
           setDisplayMessage('Wrong log in info dumbass, or maybe you forgor to signup?')
         }
@@ -61,27 +61,22 @@ const Login = ({userAccSetter}) => {
     setDisplayPassword(displayed)
   }
 
-  if (loginAttempt) {
-    return (
-      <div>
-        <Message message={displayMessage}/>
-        <button className="signup-button" onClick={handleSignUp}>Sign Up</button>
-        <form onSubmit={attemptLogin}>
-          <div className="title-text">
-            <div>Enter Username: <input value={username} onChange={usernameUpdate}/></div>
-            <div>Enter Password: <input value={displayPassword} onChange={passwordUpdate}/></div>
-          </div>
-          <div className="title-text">
-            <button type="submit">Log In</button>
-          </div>
-        </form>
-      </div>
-    )
-  } else {
-    return (
-      <button className="login-button" onClick={handleLogin}>Log In</button>
-    )
-  }
+  return (
+    <div>
+      <Message message={displayMessage}/>
+      <button className="home-button" onClick={handleGoBack}>Home</button>
+      <button className="signup-button" onClick={handleSignUp}>Sign Up Instead</button>
+      <form onSubmit={attemptLogin}>
+        <div>
+          <div className="label-text">Enter Username: <input className="input-field" value={username} onChange={usernameUpdate}/></div>
+          <div className="label-text">Enter Password: <input className="input-field" value={displayPassword} onChange={passwordUpdate}/></div>
+        </div>
+        <div className="title-text">
+          <button className="submit-login" type="submit">Log In</button>
+        </div>
+      </form>
+    </div>
+  )
 }
 
 export default Login

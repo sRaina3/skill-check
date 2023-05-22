@@ -10,7 +10,7 @@ const styles = {
   container: {
     display: 'flex',
     justifyContent: 'center',
-    backgroundColor: 'lightgray',
+    backgroundColor: 'lightyellow',
     border: '1px solid gray',
     padding: '10px',
     margin: '0 auto',

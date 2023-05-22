@@ -15,6 +15,10 @@ const SignUp = () => {
     navigate('/');
   };
 
+  const handleLogin = () => {
+    navigate('/Login')
+  }
+
   const addLogin = (e) => {
     e.preventDefault()
     userService.getUsers()
@@ -34,6 +38,7 @@ const SignUp = () => {
               setUser('')
               setPass('')
               setDisplayPassword('')
+              localStorage.setItem('userAccount', JSON.stringify(newUser));
               navigate('/')
             })
         }
@@ -63,13 +68,14 @@ const SignUp = () => {
     <div className='title-text'>
       <Message message={displayMessage}/>
       <button className="home-button" onClick={handleGoBack}>Home</button>
+      <button className="signup-button" onClick={handleLogin}>Log In Instead</button>
       <form onSubmit={addLogin}>
         <div>
-          <div>Enter Username: <input value={username} onChange={usernameUpdate}/></div>
-          <div>Enter Password: <input value={displayPassword} onChange={passwordUpdate}/></div>
+          <div className="label-text">Enter Username: <input className="input-field" value={username} onChange={usernameUpdate}/></div>
+          <div className="label-text">Enter Password: <input className="input-field" value={displayPassword} onChange={passwordUpdate}/></div>
         </div>
         <div>
-          <button type="submit">Sign Up</button>
+          <button className="submit-login" type="submit">Sign Up</button>
         </div>
       </form>
     </div>

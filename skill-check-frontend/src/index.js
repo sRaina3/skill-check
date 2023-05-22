@@ -5,6 +5,7 @@ import App from './App';
 import SequenceMemoryChal from './SequenceMemoryChal';
 import SequenceMemoryNorm from './SequenceMemoryNorm';
 import ScrambledTypeNorm from './ScrambledTypeNorm';
+import Login from './Login';
 import SignUp from './Signup'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -16,6 +17,7 @@ root.render(
       <Route path="/SequenceMemoryNorm" element={<SequenceMemoryNorm />} />
       <Route path="/ScrambledTypeNorm" element={<ScrambledTypeNorm />} />
       <Route path="/Signup" element={<SignUp />} />
+      <Route path="/Login" element={<Login />} />
     </Routes>
   </Router>
 );
