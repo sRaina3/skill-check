@@ -53,6 +53,23 @@ app.post('/api/users', (request, response) => {
   })
 })
 
+app.post('/api/users', (request, response, next) => {
+  const newUser = new User ({
+    username: request.body.username,
+    password: request.body.password,
+    seqNScore: request.body.seqNScore,
+    seqCScore: request.body.seqCScore,
+    scramNScore: request.body.scramNScore,
+    scramCScore: request.body.scramCScore
+  })
+  
+  User.findByIdAndUpdate(request.params.id, newUser)
+    .then(oldUser => {
+      response.json(oldUser)
+    })
+    .catch(error => next(error))
+})
+
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: 'unknown endpoint' })
 }

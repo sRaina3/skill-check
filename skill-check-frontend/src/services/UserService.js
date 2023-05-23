@@ -11,8 +11,8 @@ const addUser = (newUser) => {
   return request.then(response => response.data)
 }
 
-const updateUser = (updatedUser, id) => {
-  const request = axios.post(baseURL + `api/users/${id}`, updatedUser)
+const updateUser = (updatedUser) => {
+  const request = axios.put(baseURL + `api/users/${updatedUser.id}`, updatedUser)
   return request.then(response => response.data)
 }
 

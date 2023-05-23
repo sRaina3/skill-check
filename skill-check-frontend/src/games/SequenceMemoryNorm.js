@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import userService from '../services/UserService';
 import './SequenceMemory.css';
 
 const SequenceMemoryNorm = () => {
@@ -54,6 +56,12 @@ const SequenceMemoryNorm = () => {
     } else {
       if (roundCount - 1 > userAccount.seqNScore) {
         //TODO: Update Score
+        const updatedUser = JSON.parse(JSON.stringify(userAccount))
+        updatedUser.seqNScore = roundCount - 1
+        userService.updateUser(updatedUser)
+          .then(user => {
+            console.log("update successful, new highscore: " + user.seqNScore)
+          })
       }
       return (
         <div>
