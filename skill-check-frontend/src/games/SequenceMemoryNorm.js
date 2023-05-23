@@ -57,6 +57,7 @@ const SequenceMemoryNorm = () => {
       if (roundCount - 1 > userAccount.seqNScore) {
         //TODO: Update Score
         const updatedUser = JSON.parse(JSON.stringify(userAccount))
+        console.log(updatedUser)
         updatedUser.seqNScore = roundCount - 1
         userService.updateUser(updatedUser)
           .then(user => {
@@ -75,10 +76,12 @@ const SequenceMemoryNorm = () => {
       //TODO: Update Score
       const updatedUser = JSON.parse(JSON.stringify(userAccount))
       updatedUser.seqNScore = roundCount - 1
+      console.log(updatedUser)
       userService.updateUser(updatedUser)
         .then(user => {
           console.log("update successful, new highscore: " + user.seqNScore)
         })
+        .catch(error => console.log(error))
     }
     return (
       <div>

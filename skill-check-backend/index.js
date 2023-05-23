@@ -54,7 +54,7 @@ app.post('/api/users', (request, response) => {
 })
 
 app.put('/api/users/:id', (request, response, next) => {
-  const newUser = new User ({
+  const newUser = ({
     username: request.body.username,
     password: request.body.password,
     seqNScore: request.body.seqNScore,
