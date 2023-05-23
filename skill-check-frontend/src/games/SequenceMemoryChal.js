@@ -44,7 +44,10 @@ const SequenceMemoryChal = () => {
 
   if (clickedSquareCol === 'white' && roundChange) {
     setRoundChange(false)
-    const curBut = Math.ceil(Math.random() * 25)
+    let curBut = Math.ceil(Math.random() * 25)
+    while (curBut === correctSquares[correctSquares.length-1]) {
+      curBut = Math.ceil(Math.random() * 25)
+    }
     setCorrect(correctSquares.concat(curBut))
     setClicked('green');
     setClickedSq(curBut)

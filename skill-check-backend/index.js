@@ -40,17 +40,19 @@ app.get('/api/users/:id', (request, response, next) => {
 })
 
 app.post('/api/users', (request, response) => {
-  const newUser = new User ({
-    username: request.body.username,
-    password: request.body.password,
-    seqNScore: request.body.seqNScore,
-    seqCScore: request.body.seqCScore,
-    scramNScore: request.body.scramNScore,
-    scramCScore: request.body.scramCScore
-  })
-  newUser.save().then(p => {
-    response.json(p)
-  })
+  if (!User.find({username: request.body.username})) {
+    const newUser = new User ({
+      username: request.body.username,
+      password: request.body.password,
+      seqNScore: request.body.seqNScore,
+      seqCScore: request.body.seqCScore,
+      scramNScore: request.body.scramNScore,
+      scramCScore: request.body.scramCScore
+    })
+    newUser.save().then(p => {
+      response.json(p)
+    })
+  }
 })
 
 app.put('/api/users/:id', (request, response, next) => {

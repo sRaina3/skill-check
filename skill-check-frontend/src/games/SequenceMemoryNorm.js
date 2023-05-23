@@ -45,7 +45,10 @@ const SequenceMemoryNorm = () => {
 
   if (clickedSquareCol === 'white' && roundChange) {
     setRoundChange(false)
-    const curBut = Math.ceil(Math.random() * 9)
+    let curBut = Math.ceil(Math.random() * 9)
+    while (curBut === correctSquares[correctSquares.length-1]) {
+      curBut = Math.ceil(Math.random() * 9)
+    }
     setCorrect(correctSquares.concat(curBut))
     setClicked('green');
     setClickedSq(curBut)
