@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import userService from '../services/UserService';
+import Instruction from '../services/Instruction';
 import './SequenceMemory.css';
 
 const SequenceMemoryChal = () => {
@@ -95,33 +96,13 @@ const SequenceMemoryChal = () => {
       <h1 className="title">Sequence Memory</h1>
       <h1 className="title">Score: {roundCount - 1}</h1>
       <button className="home-button" onClick={handleGoBack}>Home</button>
+      <Instruction />
       <div className="highscore">{userAccount.username === 'Guest' ? 'Login to Save Score' : `Highscore:  ${userAccount.seqCScore}`}</div>
       <div className='seq-button-chal-container'>
-        <button className="seq-chal-button" style={clickedSquare === 1 ? {backgroundColor: clickedSquareCol} : {}} id={1} onClick={handleClick}></button>
-        <button className="seq-chal-button" style={clickedSquare === 2 ? {backgroundColor: clickedSquareCol} : {}} id={2} onClick={handleClick}></button>
-        <button className="seq-chal-button" style={clickedSquare === 3 ? {backgroundColor: clickedSquareCol} : {}} id={3} onClick={handleClick}></button>
-        <button className="seq-chal-button" style={clickedSquare === 4 ? {backgroundColor: clickedSquareCol} : {}} id={4} onClick={handleClick}></button>
-        <button className="seq-chal-button" style={clickedSquare === 5 ? {backgroundColor: clickedSquareCol} : {}} id={5} onClick={handleClick}></button>
-        <button className="seq-chal-button" style={clickedSquare === 6 ? {backgroundColor: clickedSquareCol} : {}} id={6} onClick={handleClick}></button>
-        <button className="seq-chal-button" style={clickedSquare === 7 ? {backgroundColor: clickedSquareCol} : {}} id={7} onClick={handleClick}></button>
-        <button className="seq-chal-button" style={clickedSquare === 8 ? {backgroundColor: clickedSquareCol} : {}} id={8} onClick={handleClick}></button>
-        <button className="seq-chal-button" style={clickedSquare === 9 ? {backgroundColor: clickedSquareCol} : {}} id={9} onClick={handleClick}></button>
-        <button className="seq-chal-button" style={clickedSquare === 10 ? {backgroundColor: clickedSquareCol} : {}} id={10} onClick={handleClick}></button>
-        <button className="seq-chal-button" style={clickedSquare === 11 ? {backgroundColor: clickedSquareCol} : {}} id={11} onClick={handleClick}></button>
-        <button className="seq-chal-button" style={clickedSquare === 12 ? {backgroundColor: clickedSquareCol} : {}} id={12} onClick={handleClick}></button>
-        <button className="seq-chal-button" style={clickedSquare === 13 ? {backgroundColor: clickedSquareCol} : {}} id={13} onClick={handleClick}></button>
-        <button className="seq-chal-button" style={clickedSquare === 14 ? {backgroundColor: clickedSquareCol} : {}} id={14} onClick={handleClick}></button>
-        <button className="seq-chal-button" style={clickedSquare === 15 ? {backgroundColor: clickedSquareCol} : {}} id={15} onClick={handleClick}></button>
-        <button className="seq-chal-button" style={clickedSquare === 16 ? {backgroundColor: clickedSquareCol} : {}} id={16} onClick={handleClick}></button>
-        <button className="seq-chal-button" style={clickedSquare === 17 ? {backgroundColor: clickedSquareCol} : {}} id={17} onClick={handleClick}></button>
-        <button className="seq-chal-button" style={clickedSquare === 18 ? {backgroundColor: clickedSquareCol} : {}} id={18} onClick={handleClick}></button>
-        <button className="seq-chal-button" style={clickedSquare === 19 ? {backgroundColor: clickedSquareCol} : {}} id={19} onClick={handleClick}></button>
-        <button className="seq-chal-button" style={clickedSquare === 20 ? {backgroundColor: clickedSquareCol} : {}} id={20} onClick={handleClick}></button>
-        <button className="seq-chal-button" style={clickedSquare === 21 ? {backgroundColor: clickedSquareCol} : {}} id={21} onClick={handleClick}></button>
-        <button className="seq-chal-button" style={clickedSquare === 22 ? {backgroundColor: clickedSquareCol} : {}} id={22} onClick={handleClick}></button>
-        <button className="seq-chal-button" style={clickedSquare === 23 ? {backgroundColor: clickedSquareCol} : {}} id={23} onClick={handleClick}></button>
-        <button className="seq-chal-button" style={clickedSquare === 24 ? {backgroundColor: clickedSquareCol} : {}} id={24} onClick={handleClick}></button>
-        <button className="seq-chal-button" style={clickedSquare === 25 ? {backgroundColor: clickedSquareCol} : {}} id={25} onClick={handleClick}></button>
+        {[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25].map(e => <button className="seq-chal-button" 
+          style={clickedSquare === e ? {backgroundColor: clickedSquareCol} : {}} 
+          id={e} key={e} onClick={handleClick}></button>
+        )}
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
 import userService from '../services/UserService';
+import Instruction from '../services/Instruction';
 import './ScrambledType.css'
 
 const ScrambledTypeNorm = () => {
@@ -97,6 +98,7 @@ const ScrambledTypeNorm = () => {
     return (
       <div>
         <button className="home-button" onClick={handleGoBack}>Home</button>
+        <Instruction />
         <div className="highscore">{userAccount.username === 'Guest' ? 'Login to Save Score' : `Highscore:  ${userAccount.scramNScore}`}</div>
         <h1 className='text'>{timeTaken}</h1>
         <h1 className='text'>

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import userService from '../services/UserService';
+import Instruction from '../services/Instruction';
 import './SequenceMemory.css';
 
 const SequenceMemoryNorm = () => {
@@ -12,7 +13,6 @@ const SequenceMemoryNorm = () => {
   const [clickedSquare, setClickedSq] = useState(0)
   const [roundChange, setRoundChange] = useState(true)
   const [userAccount, setUserAccount] = useState({username: 'Guest'})
-  const [showInstructions, setShowInstructions] = useState(false);
 
   useEffect(() => {
     // Retrieve the user account from local storage if logged in
@@ -28,9 +28,6 @@ const SequenceMemoryNorm = () => {
     navigate('/');
   };
 
-  const handleInstructions = () => {
-    setShowInstructions(true)
-  }
 
   const handleTryAgain = () => {
     setCorrect([])
@@ -99,18 +96,13 @@ const SequenceMemoryNorm = () => {
       <h1 className="title">Sequence Memory</h1>
       <h1 className="title">Score: {roundCount - 1}</h1>
       <button className="home-button" onClick={handleGoBack}>Home</button>
-      <button className="home-button" onClick={handleInstructions}>Show Instructions</button>
+      <Instruction />
       <div className="highscore">{userAccount.username === 'Guest' ? 'Login to Save Score' : `Highscore:  ${userAccount.seqNScore}`}</div>
       <div className='seq-button-norm-container'>
-        <button className="seq-norm-button" style={clickedSquare === 1 ? {backgroundColor: clickedSquareCol} : {}} id={1} onClick={handleClick}></button>
-        <button className="seq-norm-button" style={clickedSquare === 2 ? {backgroundColor: clickedSquareCol} : {}} id={2} onClick={handleClick}></button>
-        <button className="seq-norm-button" style={clickedSquare === 3 ? {backgroundColor: clickedSquareCol} : {}} id={3} onClick={handleClick}></button>
-        <button className="seq-norm-button" style={clickedSquare === 4 ? {backgroundColor: clickedSquareCol} : {}} id={4} onClick={handleClick}></button>
-        <button className="seq-norm-button" style={clickedSquare === 5 ? {backgroundColor: clickedSquareCol} : {}} id={5} onClick={handleClick}></button>
-        <button className="seq-norm-button" style={clickedSquare === 6 ? {backgroundColor: clickedSquareCol} : {}} id={6} onClick={handleClick}></button>
-        <button className="seq-norm-button" style={clickedSquare === 7 ? {backgroundColor: clickedSquareCol} : {}} id={7} onClick={handleClick}></button>
-        <button className="seq-norm-button" style={clickedSquare === 8 ? {backgroundColor: clickedSquareCol} : {}} id={8} onClick={handleClick}></button>
-        <button className="seq-norm-button" style={clickedSquare === 9 ? {backgroundColor: clickedSquareCol} : {}} id={9} onClick={handleClick}></button>
+        {[1,2,3,4,5,6,7,8,9].map(e => <button className="seq-norm-button" 
+          style={clickedSquare === e ? {backgroundColor: clickedSquareCol} : {}} 
+          id={e} key={e} onClick={handleClick}></button>
+        )}
       </div>
     </div>
   );

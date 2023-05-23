@@ -1,0 +1,53 @@
+.instruction-button {
+  position: absolute;
+  bottom: 20px; 
+  right: 20px;
+  font-size: 30px;
+  font-weight: bold;
+  padding: 12px 20px;
+  border-radius: 8px;
+  background-color: #d30808;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  outline: 8px solid rgb(5, 159, 38);
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(20, 20, 173);
+  padding: 20px;
+  border-radius: 8px;
+  color: #fff;
+}
+.modal > .header {
+  width: 100%;
+  border-bottom: 1px solid gray;
+  font-size: 36px;
+  font-weight: bold;
+  color: #ffffff;
+  text-align: center;
+  padding: 5px;
+}
+.modal > .content {
+  width: 100%;
+  font-size: 20px;
+  padding: 10px 5px;
+  color: #ffffff;
+}
+.modal > .close {
+  cursor: pointer;
+  position: absolute;
+  display: block;
+  padding: 2px 5px;
+  line-height: 20px;
+  right: -10px;
+  top: -10px;
+  font-size: 24px;
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #cfcece;
+}
