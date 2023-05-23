@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SequenceMemory.css';
 
@@ -9,6 +9,15 @@ const SequenceMemoryNorm = () => {
   const [clickedSquareCol, setClicked] = useState('white')
   const [clickedSquare, setClickedSq] = useState(0)
   const [roundChange, setRoundChange] = useState(true)
+  const [userAccount, setUserAccount] = useState({username: 'Guest'})
+
+  useEffect(() => {
+    // Retrieve the user account from local storage if logged in
+    const storedUserAccount = localStorage.getItem('userAccount');
+    if (storedUserAccount) {
+      setUserAccount(JSON.parse(storedUserAccount));
+    }
+  }, []);
 
   const navigate = useNavigate();
 
@@ -43,6 +52,9 @@ const SequenceMemoryNorm = () => {
       setUser([])
       setRoundChange(true)
     } else {
+      if (roundCount - 1 > userAccount.seqNScore) {
+        //TODO: Update Score
+      }
       return (
         <div>
           <h1 className='title'>You Lost</h1>
@@ -51,6 +63,9 @@ const SequenceMemoryNorm = () => {
       )
     }
   } else if (correctSquares[userSquares.length-1] !== userSquares[userSquares.length-1]) {
+    if (roundCount - 1 > userAccount.seqNScore) {
+      //TODO: Update Score
+    }
     return (
       <div>
         <h1 className='title'>You Lost</h1>
@@ -64,6 +79,7 @@ const SequenceMemoryNorm = () => {
       <h1 className="title">Sequence Memory</h1>
       <h1 className="title">Score: {roundCount - 1}</h1>
       <button className="home-button" onClick={handleGoBack}>Home</button>
+      <div className="highscore">Highscore: {userAccount.seqNScore}</div>
       <div className='seq-button-norm-container'>
         <button className="seq-norm-button" style={clickedSquare === 1 ? {backgroundColor: clickedSquareCol} : {}} id={1} onClick={handleClick}></button>
         <button className="seq-norm-button" style={clickedSquare === 2 ? {backgroundColor: clickedSquareCol} : {}} id={2} onClick={handleClick}></button>

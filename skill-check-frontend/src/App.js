@@ -23,6 +23,11 @@ const App = () => {
     navigate('/Login')
   }
 
+  const handleLogOut = () => {
+    localStorage.removeItem('userAccount');
+    setUserAccount({username: 'Guest'})
+  }
+
   const handleSeq = () => {
     if (difficulty === 'normal') {
       navigate('/SequenceMemoryNorm')
@@ -47,23 +52,42 @@ const App = () => {
     setDifficulty('challenge')
   }
 
-  return (
-    <div>
-      <div className="corner-text">Welcome {userAccount.username}!</div>
-      <div className="title-screen">
-        <h1 className="title-text">Choose a Game</h1>
-        <button className="login-button" onClick={handleLogin}>Log In</button>
-        <button className="signup-button" onClick={handleSignUp}>Sign Up</button>
-        <button className="game-button" onClick={handleSeq}>Sequence Memory</button>
-        <button className="game-button" onClick={handleType}>Scrambled Type Test</button>
-        <div>
-          <h1 className="title-text">Select Mode</h1>
-          <button className={`mode-button normal ${difficulty === 'normal' ? 'fiery-border' : ''}`} onClick={handleNormalMode}>Normal</button>
-          <button className={`mode-button challenge ${difficulty === 'challenge' ? 'fiery-border' : ''}`} onClick={handleChallengeMode}>Challenge</button>
+  if (userAccount.username === 'Guest') {
+    return (
+      <div>
+        <div className="corner-text">Welcome {userAccount.username}!</div>
+        <div className="title-screen">
+          <h1 className="title-text">Choose a Game</h1>
+          <button className="login-button" onClick={handleLogin}>Log In</button>
+          <button className="signup-button" onClick={handleSignUp}>Sign Up</button>
+          <button className="game-button" onClick={handleSeq}>Sequence Memory</button>
+          <button className="game-button" onClick={handleType}>Scrambled Type Test</button>
+          <div>
+            <h1 className="title-text">Select Mode</h1>
+            <button className={`mode-button normal ${difficulty === 'normal' ? 'fiery-border' : ''}`} onClick={handleNormalMode}>Normal</button>
+            <button className={`mode-button challenge ${difficulty === 'challenge' ? 'fiery-border' : ''}`} onClick={handleChallengeMode}>Challenge</button>
+          </div>
         </div>
       </div>
-    </div>
-  )
+    )
+  } else {
+    return (
+      <div>
+        <div className="corner-text">Welcome {userAccount.username}!</div>
+        <div className="title-screen">
+          <h1 className="title-text">Choose a Game</h1>
+          <button className="signup-button" onClick={handleLogOut}>Log Out</button>
+          <button className="game-button" onClick={handleSeq}>Sequence Memory</button>
+          <button className="game-button" onClick={handleType}>Scrambled Type Test</button>
+          <div>
+            <h1 className="title-text">Select Mode</h1>
+            <button className={`mode-button normal ${difficulty === 'normal' ? 'fiery-border' : ''}`} onClick={handleNormalMode}>Normal</button>
+            <button className={`mode-button challenge ${difficulty === 'challenge' ? 'fiery-border' : ''}`} onClick={handleChallengeMode}>Challenge</button>
+          </div>
+        </div>
+      </div>
+    )
+  }
 }
 
 export default App;

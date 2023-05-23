@@ -11,6 +11,11 @@ const addUser = (newUser) => {
   return request.then(response => response.data)
 }
 
-const userService = {getUsers, addUser}
+const updateUser = (updatedUser, id) => {
+  const request = axios.post(baseURL + `api/users/${id}`, updatedUser)
+  return request.then(response => response.data)
+}
+
+const userService = {getUsers, addUser, updateUser}
 
 export default userService
