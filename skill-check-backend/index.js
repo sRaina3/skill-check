@@ -53,7 +53,7 @@ app.post('/api/users', (request, response) => {
   })
 })
 
-app.post('/api/users', (request, response, next) => {
+app.put('/api/users/:id', (request, response, next) => {
   const newUser = new User ({
     username: request.body.username,
     password: request.body.password,
@@ -62,7 +62,7 @@ app.post('/api/users', (request, response, next) => {
     scramNScore: request.body.scramNScore,
     scramCScore: request.body.scramCScore
   })
-  
+
   User.findByIdAndUpdate(request.params.id, newUser)
     .then(oldUser => {
       response.json(oldUser)

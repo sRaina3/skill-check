@@ -73,6 +73,12 @@ const SequenceMemoryNorm = () => {
   } else if (correctSquares[userSquares.length-1] !== userSquares[userSquares.length-1]) {
     if (roundCount - 1 > userAccount.seqNScore) {
       //TODO: Update Score
+      const updatedUser = JSON.parse(JSON.stringify(userAccount))
+      updatedUser.seqNScore = roundCount - 1
+      userService.updateUser(updatedUser)
+        .then(user => {
+          console.log("update successful, new highscore: " + user.seqNScore)
+        })
     }
     return (
       <div>
