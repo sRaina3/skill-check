@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import userService from '../services/UserService';
 import './SequenceMemory.css';
 
 const SequenceMemoryChal = () => {
@@ -9,6 +11,15 @@ const SequenceMemoryChal = () => {
   const [clickedSquareCol, setClicked] = useState('white')
   const [clickedSquare, setClickedSq] = useState(0)
   const [roundChange, setRoundChange] = useState(true)
+  const [userAccount, setUserAccount] = useState({username: 'Guest'})
+
+  useEffect(() => {
+    // Retrieve the user account from local storage if logged in
+    const storedUserAccount = localStorage.getItem('userAccount');
+    if (storedUserAccount) {
+      setUserAccount(JSON.parse(storedUserAccount));
+    }
+  }, [roundCount]);
 
   const navigate = useNavigate();
 
@@ -43,6 +54,16 @@ const SequenceMemoryChal = () => {
       setUser([])
       setRoundChange(true)
     } else {
+      if (roundCount - 1 > userAccount.seqCScore) {
+        const updatedUser = JSON.parse(JSON.stringify(userAccount))
+        updatedUser.seqCScore = roundCount - 1
+        console.log(updatedUser)
+        userService.updateUser(updatedUser)
+          .then(user => {
+            localStorage.setItem('userAccount', JSON.stringify(updatedUser));
+          })
+          .catch(error => console.log(error))
+      }
       return (
         <div>
           <h1 className='title'>You Lost</h1>
@@ -51,6 +72,16 @@ const SequenceMemoryChal = () => {
       )
     }
   } else if (correctSquares[userSquares.length-1] !== userSquares[userSquares.length-1]) {
+    if (roundCount - 1 > userAccount.seqCScore) {
+      const updatedUser = JSON.parse(JSON.stringify(userAccount))
+      updatedUser.seqCScore = roundCount - 1
+      console.log(updatedUser)
+      userService.updateUser(updatedUser)
+        .then(user => {
+          localStorage.setItem('userAccount', JSON.stringify(updatedUser));
+        })
+        .catch(error => console.log(error))
+    }
     return (
       <div>
         <h1 className='title'>You Lost</h1>
@@ -64,6 +95,7 @@ const SequenceMemoryChal = () => {
       <h1 className="title">Sequence Memory</h1>
       <h1 className="title">Score: {roundCount - 1}</h1>
       <button className="home-button" onClick={handleGoBack}>Home</button>
+      <div className="highscore">{userAccount.username === 'Guest' ? 'Login to Save Score' : `Highscore:  ${userAccount.seqCScore}`}</div>
       <div className='seq-button-chal-container'>
         <button className="seq-chal-button" style={clickedSquare === 1 ? {backgroundColor: clickedSquareCol} : {}} id={1} onClick={handleClick}></button>
         <button className="seq-chal-button" style={clickedSquare === 2 ? {backgroundColor: clickedSquareCol} : {}} id={2} onClick={handleClick}></button>

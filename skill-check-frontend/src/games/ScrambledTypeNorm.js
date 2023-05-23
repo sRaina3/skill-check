@@ -3,6 +3,7 @@ import {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
+import userService from '../services/UserService';
 import './ScrambledType.css'
 
 const ScrambledTypeNorm = () => {
@@ -13,6 +14,15 @@ const ScrambledTypeNorm = () => {
   const [displayText, setDisplayText] = useState('')
   const [curIndex, setCurIndex] = useState(0)
   const [timeTaken, setTimeTaken] = useState(60)
+  const [userAccount, setUserAccount] = useState({username: 'Guest'})
+
+  useEffect(() => {
+    // Retrieve the user account from local storage if logged in
+    const storedUserAccount = localStorage.getItem('userAccount');
+    if (storedUserAccount) {
+      setUserAccount(JSON.parse(storedUserAccount));
+    }
+  }, [displayText]);
 
   const navigate = useNavigate();
 
@@ -67,6 +77,16 @@ const ScrambledTypeNorm = () => {
   }
 
   if (displayText.length !== 0 && curIndex >= displayText.length) {
+    if (timeTaken * displayText.length > userAccount.scramNScore) {
+      const updatedUser = JSON.parse(JSON.stringify(userAccount))
+      updatedUser.scramNScore = timeTaken * displayText.length
+      console.log(updatedUser)
+      userService.updateUser(updatedUser)
+        .then(user => {
+          localStorage.setItem('userAccount', JSON.stringify(updatedUser));
+        })
+        .catch(error => console.log(error))
+    }
     return (
       <div className='text'>
         <button className="home-button" onClick={handleTryAgain}>Play Again</button>
@@ -77,6 +97,7 @@ const ScrambledTypeNorm = () => {
     return (
       <div>
         <button className="home-button" onClick={handleGoBack}>Home</button>
+        <div className="highscore">{userAccount.username === 'Guest' ? 'Login to Save Score' : `Highscore:  ${userAccount.scramNScore}`}</div>
         <h1 className='text'>{timeTaken}</h1>
         <h1 className='text'>
           {displayText.split('').map((char, index) => (

@@ -12,6 +12,7 @@ const SequenceMemoryNorm = () => {
   const [clickedSquare, setClickedSq] = useState(0)
   const [roundChange, setRoundChange] = useState(true)
   const [userAccount, setUserAccount] = useState({username: 'Guest'})
+  const [showInstructions, setShowInstructions] = useState(false);
 
   useEffect(() => {
     // Retrieve the user account from local storage if logged in
@@ -19,13 +20,17 @@ const SequenceMemoryNorm = () => {
     if (storedUserAccount) {
       setUserAccount(JSON.parse(storedUserAccount));
     }
-  }, []);
+  }, [roundCount]);
 
   const navigate = useNavigate();
 
   const handleGoBack = () => {
     navigate('/');
   };
+
+  const handleInstructions = () => {
+    setShowInstructions(true)
+  }
 
   const handleTryAgain = () => {
     setCorrect([])
@@ -55,13 +60,12 @@ const SequenceMemoryNorm = () => {
       setRoundChange(true)
     } else {
       if (roundCount - 1 > userAccount.seqNScore) {
-        //TODO: Update Score
         const updatedUser = JSON.parse(JSON.stringify(userAccount))
         console.log(updatedUser)
         updatedUser.seqNScore = roundCount - 1
         userService.updateUser(updatedUser)
           .then(user => {
-            console.log("update successful, new highscore: " + user.seqNScore)
+            localStorage.setItem('userAccount', JSON.stringify(updatedUser));
           })
       }
       return (
@@ -73,13 +77,12 @@ const SequenceMemoryNorm = () => {
     }
   } else if (correctSquares[userSquares.length-1] !== userSquares[userSquares.length-1]) {
     if (roundCount - 1 > userAccount.seqNScore) {
-      //TODO: Update Score
       const updatedUser = JSON.parse(JSON.stringify(userAccount))
       updatedUser.seqNScore = roundCount - 1
       console.log(updatedUser)
       userService.updateUser(updatedUser)
         .then(user => {
-          console.log("update successful, new highscore: " + user.seqNScore)
+          localStorage.setItem('userAccount', JSON.stringify(updatedUser));
         })
         .catch(error => console.log(error))
     }
@@ -96,7 +99,8 @@ const SequenceMemoryNorm = () => {
       <h1 className="title">Sequence Memory</h1>
       <h1 className="title">Score: {roundCount - 1}</h1>
       <button className="home-button" onClick={handleGoBack}>Home</button>
-      <div className="highscore">Highscore: {userAccount.seqNScore}</div>
+      <button className="home-button" onClick={handleInstructions}>Show Instructions</button>
+      <div className="highscore">{userAccount.username === 'Guest' ? 'Login to Save Score' : `Highscore:  ${userAccount.seqNScore}`}</div>
       <div className='seq-button-norm-container'>
         <button className="seq-norm-button" style={clickedSquare === 1 ? {backgroundColor: clickedSquareCol} : {}} id={1} onClick={handleClick}></button>
         <button className="seq-norm-button" style={clickedSquare === 2 ? {backgroundColor: clickedSquareCol} : {}} id={2} onClick={handleClick}></button>
