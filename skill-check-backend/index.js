@@ -42,7 +42,11 @@ app.get('/api/users/:id', (request, response, next) => {
 app.post('/api/users', (request, response) => {
   const newUser = new User ({
     username: request.body.username,
-    password: request.body.password 
+    password: request.body.password,
+    seqNScore: request.body.seqNScore,
+    seqCScore: request.body.seqCScore,
+    scramNScore: request.body.scramNScore,
+    scramCScore: request.body.scramCScore
   })
   newUser.save().then(p => {
     response.json(p)
@@ -66,7 +70,7 @@ const errorHandler = (error, request, response, next) => {
 // this has to be the last loaded middleware.
 app.use(errorHandler)
 
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })

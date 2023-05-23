@@ -5,8 +5,8 @@ import './App.css';
 const App = () => {
   const navigate = useNavigate();
   const [difficulty, setDifficulty] = useState('normal')
-  const [userAccount, setUserAccount] = useState({username: 'Guest', password: ''})
-
+  const [userAccount, setUserAccount] = useState({username: 'Guest'})
+  
   useEffect(() => {
     // Retrieve the user account from local storage if logged in
     const storedUserAccount = localStorage.getItem('userAccount');
@@ -32,7 +32,11 @@ const App = () => {
   };
 
   const handleType = () => {
-    navigate('/ScrambledTypeNorm')
+    if (difficulty === 'normal') {
+      navigate('/ScrambledTypeNorm')
+    } else {
+      navigate('/ScrambledTypeChal')
+    }
   }
 
   const handleNormalMode = () => {

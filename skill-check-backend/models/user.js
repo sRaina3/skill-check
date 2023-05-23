@@ -17,6 +17,10 @@ mongoose.connect(url)
 const userSchema = new mongoose.Schema({
   username: String,
   password: String,
+  seqNScore: Number,
+  seqCScore: Number,
+  scramNScore: Number,
+  scramCScore: Number
 })
 
 userSchema.set('toJSON', {

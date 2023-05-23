@@ -22,21 +22,15 @@ const Login = () => {
 
   const attemptLogin = (e) => {
     e.preventDefault()
-    console.log(username)
-    console.log(password)
     userService.getUsers()
       .then(users => {
-        console.log(users)
-        if (users.filter(u => u.username === username && u.password === password).length !== 0) {
-          const newUser = {
-            username: username,
-            passwrd: password
-          }
+        const foundUser = users.find(u => u.username === username && u.password === password)
+        if (foundUser) {
           // Save the user account in local storage
-          localStorage.setItem('userAccount', JSON.stringify(newUser));
+          localStorage.setItem('userAccount', JSON.stringify(foundUser));
           navigate('/')
         } else {
-          setDisplayMessage('Wrong log in info dumbass, or maybe you forgor to signup?')
+          setDisplayMessage('Incorrect Log in Information, Have you signed up?')
         }
         setUser('')
         setPass('')

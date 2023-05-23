@@ -23,22 +23,23 @@ const SignUp = () => {
     e.preventDefault()
     userService.getUsers()
       .then(users => {
-        console.log(username)
-        console.log(users)
-        console.log(users.filter(u => u.username === username).length)
-        if (users.filter(u => u.username === username).length === 1) {
+        if (users.filter(u => u.username === username).length > 0) {
           setDisplayMessage("This Username Already Exists")
         } else {
           const newUser = {
             username: username,
-            password: password
+            password: password,
+            seqNScore: 0,
+            seqCScore: 0,
+            scramNScore: 0,
+            scramCScore: 0
           }
           userService.addUser(newUser)
             .then(addedUser => {
               setUser('')
               setPass('')
               setDisplayPassword('')
-              localStorage.setItem('userAccount', JSON.stringify(newUser));
+              localStorage.setItem('userAccount', JSON.stringify(addedUser));
               navigate('/')
             })
         }
