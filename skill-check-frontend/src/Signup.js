@@ -32,7 +32,8 @@ const SignUp = () => {
             seqNScore: 0,
             seqCScore: 0,
             scramNScore: 0,
-            scramCScore: 0
+            scramCScore: 0,
+            skillCoins: 0
           }
           userService.addUser(newUser)
             .then(addedUser => {
