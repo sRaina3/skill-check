@@ -4,12 +4,12 @@ POST http://localhost:3001/api/users HTTP/1.1
 content-type: application/json
 
 {
-  "username": "Joe Biden", 
-  "password": "America",
-  "seqNScore": 0
+  "username": "Tsest", 
+  "password": "Test",
+  "skillCoins": 0
 }
 ###
-PUT https://skillcheck-backend.onrender.com/api/users/646c46342a755d4c3cb8159d HTTP/1.1
+PUT http://localhost:3001/api/users/646d22ce2ba2595c59c3f318 HTTP/1.1
 content-type: application/json
 
 {
@@ -19,5 +19,5 @@ content-type: application/json
   "seqCScore": 0,
   "scramNScore": 0,
   "scramCScore": 0,
-  "id": "646c46342a755d4c3cb8159d"
+  "skillCoins": 0
 }

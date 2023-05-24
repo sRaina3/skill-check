@@ -42,14 +42,9 @@ app.get('/api/users/:id', (request, response, next) => {
 app.post('/api/users', (request, response) => {
   User.find({username: request.body.username}).then(users => {
     if (users.length === 0) {
-      const newUser = new User ({
-        username: request.body.username,
-        password: request.body.password,
-        seqNScore: request.body.seqNScore,
-        seqCScore: request.body.seqCScore,
-        scramNScore: request.body.scramNScore,
-        scramCScore: request.body.scramCScore
-      })
+      const newUser = new User({
+        ...request.body,
+      });
       newUser.save().then(p => {
         response.json(p)
       })
@@ -61,13 +56,8 @@ app.post('/api/users', (request, response) => {
 
 app.put('/api/users/:id', (request, response, next) => {
   const newUser = ({
-    username: request.body.username,
-    password: request.body.password,
-    seqNScore: request.body.seqNScore,
-    seqCScore: request.body.seqCScore,
-    scramNScore: request.body.scramNScore,
-    scramCScore: request.body.scramCScore
-  })
+    ...request.body,
+  });
 
   User.findByIdAndUpdate(request.params.id, newUser)
     .then(oldUser => {

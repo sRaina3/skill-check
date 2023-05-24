@@ -26,7 +26,6 @@ const SignUp = () => {
         if (users.filter(u => u.username === username).length > 0) {
           setDisplayMessage("This Username Already Exists")
         } else {
-          navigate('/')
           const newUser = {
             username: username,
             password: password,
@@ -37,10 +36,8 @@ const SignUp = () => {
           }
           userService.addUser(newUser)
             .then(addedUser => {
-              setUser('')
-              setPass('')
-              setDisplayPassword('')
               localStorage.setItem('userAccount', JSON.stringify(addedUser));
+              navigate('/')
             })
         }
       })

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import userService from '../services/UserService';
 import Instruction from '../services/Instruction';
 import './SequenceMemory.css';
+import Inst from '../images/SeqMem.png'
 
 const SequenceMemoryChal = () => {
   const [roundCount, setRound] = useState(0)
@@ -58,37 +59,37 @@ const SequenceMemoryChal = () => {
       setUser([])
       setRoundChange(true)
     } else {
+      const updatedUser = JSON.parse(JSON.stringify(userAccount))
+      updatedUser.skillCoins += ((roundCount - 1) ** 2) / 60
       if (roundCount - 1 > userAccount.seqCScore) {
-        const updatedUser = JSON.parse(JSON.stringify(userAccount))
         updatedUser.seqCScore = roundCount - 1
-        console.log(updatedUser)
-        userService.updateUser(updatedUser)
-          .then(user => {
-            localStorage.setItem('userAccount', JSON.stringify(updatedUser));
-          })
-          .catch(error => console.log(error))
       }
+      userService.updateUser(updatedUser)
+        .then(user => {
+          localStorage.setItem('userAccount', JSON.stringify(updatedUser));
+        })
       return (
         <div>
-          <h1 className='title'>You Lost</h1>
+          <h1 className='coin-display'>+ {Number((((roundCount - 1) ** 2) / 60).toFixed(3))} Skill Coins</h1>
+          <h1 className='score-display'>Score: {roundCount - 1}</h1>
           <button className="home-button" onClick={handleTryAgain}>Try Again</button>
         </div>
       )
     }
   } else if (correctSquares[userSquares.length-1] !== userSquares[userSquares.length-1]) {
+    const updatedUser = JSON.parse(JSON.stringify(userAccount))
+    updatedUser.skillCoins += ((roundCount - 1) ** 2) / 60
     if (roundCount - 1 > userAccount.seqCScore) {
-      const updatedUser = JSON.parse(JSON.stringify(userAccount))
       updatedUser.seqCScore = roundCount - 1
-      console.log(updatedUser)
-      userService.updateUser(updatedUser)
-        .then(user => {
-          localStorage.setItem('userAccount', JSON.stringify(updatedUser));
-        })
-        .catch(error => console.log(error))
     }
+    userService.updateUser(updatedUser)
+      .then(user => {
+        localStorage.setItem('userAccount', JSON.stringify(updatedUser));
+      })
     return (
       <div>
-        <h1 className='title'>You Lost</h1>
+        <h1 className='coin-display'>+ {Number((((roundCount - 1) ** 2) / 60).toFixed(3))} Skill Coins</h1>
+        <h1 className='score-display'>Score: {roundCount - 1}</h1>
         <button className="home-button" onClick={handleTryAgain}>Try Again</button>
       </div>
     )
@@ -99,7 +100,7 @@ const SequenceMemoryChal = () => {
       <h1 className="title">Sequence Memory</h1>
       <h1 className="title">Score: {roundCount - 1}</h1>
       <button className="home-button" onClick={handleGoBack}>Home</button>
-      <Instruction />
+      <Instruction content={Inst}/>
       <div className="highscore">{userAccount.username === 'Guest' ? 'Login to Save Score' : `Highscore:  ${userAccount.seqCScore}`}</div>
       <div className='seq-button-chal-container'>
         {[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25].map(e => <button className="seq-chal-button" 

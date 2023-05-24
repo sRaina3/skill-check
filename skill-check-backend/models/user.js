@@ -20,7 +20,8 @@ const userSchema = new mongoose.Schema({
   seqNScore: Number,
   seqCScore: Number,
   scramNScore: Number,
-  scramCScore: Number
+  scramCScore: Number,
+  skillCoins: Number
 })
 
 userSchema.set('toJSON', {

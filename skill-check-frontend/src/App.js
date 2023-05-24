@@ -25,7 +25,7 @@ const App = () => {
 
   const handleLogOut = () => {
     localStorage.removeItem('userAccount');
-    setUserAccount({username: 'Guest'})
+    setUserAccount({username: 'Guest'}  )
   }
 
   const handleSeq = () => {
@@ -74,6 +74,7 @@ const App = () => {
     return (
       <div>
         <div className="corner-text">Welcome {userAccount.username}!</div>
+        <div className="coin-display">Balance: ${Number(userAccount.skillCoins.toFixed(3))}</div>
         <div className="title-screen">
           <h1 className="title-text">Choose a Game</h1>
           <button className="signup-button" onClick={handleLogOut}>Log Out</button>

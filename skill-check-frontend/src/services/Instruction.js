@@ -9,10 +9,7 @@ const Instruction = ({content}) => {
           <button className="close" onClick={close}>
             &times;
           </button>
-          <div className="header"> Instructions </div>
-          <div className="content">
-            {content}
-          </div>
+          <img src={content} alt="Instructions" style={{ width: '1000px', height: 'auto' }} />
         </div>
       )}
     </Popup>

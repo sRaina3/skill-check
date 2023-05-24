@@ -1,5 +1,6 @@
 import axios from 'axios'
-const baseURL = 'https://skillcheck-backend.onrender.com/'
+//const baseURL = 'https://skillcheck-backend.onrender.com/'
+const baseURL = 'http://localhost:3001/'
 
 const getUsers = () => {
   const request = axios.get(baseURL + 'api/users')

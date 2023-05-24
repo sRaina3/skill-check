@@ -1,11 +1,12 @@
 // API Used: https://github.com/lukePeavey/quotable
 import {useState, useEffect} from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
-import userService from '../services/UserService';
-import Instruction from '../services/Instruction';
+import userService from '../services/UserService'
+import Instruction from '../services/Instruction'
 import './ScrambledType.css'
+
 
 const ScrambledTypeNorm = () => {
   const keyboardKeys = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", "s", "d", "f", "g", "h", 
@@ -78,27 +79,27 @@ const ScrambledTypeNorm = () => {
   }
 
   if (displayText.length !== 0 && curIndex >= displayText.length) {
+    const updatedUser = JSON.parse(JSON.stringify(userAccount))
+    updatedUser.skillCoins += ((timeTaken * displayText.length) ** 2.9) / 100000000
     if (timeTaken * displayText.length > userAccount.scramNScore) {
-      const updatedUser = JSON.parse(JSON.stringify(userAccount))
       updatedUser.scramNScore = timeTaken * displayText.length
-      console.log(updatedUser)
-      userService.updateUser(updatedUser)
-        .then(user => {
-          localStorage.setItem('userAccount', JSON.stringify(updatedUser));
-        })
-        .catch(error => console.log(error))
     }
+    userService.updateUser(updatedUser)
+      .then(user => {
+        localStorage.setItem('userAccount', JSON.stringify(updatedUser));
+      })
     return (
       <div className='text'>
+        <h1 className='coin-display'>+ {Number((((timeTaken * displayText.length) ** 2.9) / 100000000).toFixed(3))} Skill Coins</h1>
         <button className="home-button" onClick={handleTryAgain}>Play Again</button>
-        You Won with {timeTaken} seconds left!
+        <h1 className='score-display'>You Won with {timeTaken} seconds left!</h1>
       </div>
     )
   } else if (timeTaken > -1) {
     return (
       <div>
         <button className="home-button" onClick={handleGoBack}>Home</button>
-        <Instruction />
+        <Instruction/>
         <div className="highscore">{userAccount.username === 'Guest' ? 'Login to Save Score' : `Highscore:  ${userAccount.scramNScore}`}</div>
         <h1 className='text'>{timeTaken}</h1>
         <h1 className='text'>

@@ -97,7 +97,18 @@ body {
   top: 20px;
   left: 10px;
   font-size: 36px;
-  background-color: #b50c9b;
+  background-color: #630cb5;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.coin-display {
+  color: rgb(219, 166, 21);
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 36px;
   padding: 5px 10px;
   border-radius: 4px;
 }

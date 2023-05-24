@@ -16,7 +16,7 @@ const ScrambledTypeNorm = () => {
   const [scrambledKeys, setScrambled] = useState([...keyboardKeys])
   const [displayText, setDisplayText] = useState('')
   const [curIndex, setCurIndex] = useState(0)
-  const [timeTaken, setTimeTaken] = useState(90)
+  const [timeTaken, setTimeTaken] = useState(100)
   const [userAccount, setUserAccount] = useState({username: 'Guest'})
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const ScrambledTypeNorm = () => {
 
   const handleTryAgain = () => {
     setCurIndex(0)
-    setTimeTaken(90)
+    setTimeTaken(100)
     axios
       .get('https://api.quotable.io/random?maxLength=35')
       .then(response => {
@@ -80,20 +80,20 @@ const ScrambledTypeNorm = () => {
   }
 
   if (displayText.length !== 0 && curIndex >= displayText.length) {
+    const updatedUser = JSON.parse(JSON.stringify(userAccount))
+    updatedUser.skillCoins += ((timeTaken * displayText.length) ** 2.9) / 100000000
     if (timeTaken * displayText.length > userAccount.scramCScore) {
-      const updatedUser = JSON.parse(JSON.stringify(userAccount))
       updatedUser.scramCScore = timeTaken * displayText.length
-      console.log(updatedUser)
-      userService.updateUser(updatedUser)
-        .then(user => {
-          localStorage.setItem('userAccount', JSON.stringify(updatedUser));
-        })
-        .catch(error => console.log(error))
     }
+    userService.updateUser(updatedUser)
+      .then(user => {
+        localStorage.setItem('userAccount', JSON.stringify(updatedUser));
+      })
     return (
       <div className='text'>
+        <h1 className='coin-display'>+ {Number((((timeTaken * displayText.length) ** 2.9) / 100000000).toFixed(3))} Skill Coins</h1>
         <button className="home-button" onClick={handleTryAgain}>Play Again</button>
-        You Won with {timeTaken} seconds left!
+        <h1 className='score-display'>You Won with {timeTaken} seconds left!</h1>
       </div>
     )
   } else if (timeTaken > -1) {
