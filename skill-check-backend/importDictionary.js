@@ -12,14 +12,20 @@ const rl = readline.createInterface({
   crlfDelay: Infinity
 });
 
-rl.on('line', (line) => {
-  const word = line.trim(); // Remove leading/trailing whitespace
-  const newEntry = new Word({ word });
+let arr = []
+let count = 30001
 
+rl.on('line', (line) => {
+  const nextWord = line.trim(); // Remove leading/trailing whitespace
+  const newEntry = new Word({ 
+    word: nextWord,
+    index: count
+  });
+  count++
   newEntry.save()
-    .catch((error) => {
-      console.error(`Error saving word "${word}":`, error);
-    });
+  .catch((error) => {
+    console.error(`Error saving word "${nextWord}":`, error);
+  });
 });
 
 rl.on('close', () => {

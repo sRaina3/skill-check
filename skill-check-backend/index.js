@@ -72,13 +72,9 @@ app.put('/api/users/:id', (request, response, next) => {
 
 
 app.get('/api/words/random', (request, response) => {
-  const randomIndex = Math.floor(Math.random() * count);
-  Word.findOne().skip(randomIndex).exec((error, entry) => {
-    if (error) {
-      response.status(500).json({ error: 'Could not find an entry' });
-    } else {
-      response.json(entry);
-    }
+  const randomIndex = Math.ceil(Math.random() * 60000);
+  Word.find({index: randomIndex}).then(entry => {
+    response.json(entry);
   });
 });
 

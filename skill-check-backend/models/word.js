@@ -15,7 +15,8 @@ mongoose.connect(url)
   })
 
 const wordSchema = new mongoose.Schema({
-  word: String
+  word: String,
+  index: Number
 })
 
 wordSchema.set('toJSON', {
