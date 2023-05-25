@@ -25,6 +25,8 @@ const SignUp = () => {
       .then(users => {
         if (users.filter(u => u.username === username).length > 0) {
           setDisplayMessage("This Username Already Exists")
+        } else if (password.length < 5) {
+          setDisplayMessage("Password must be atleast 5 characters")
         } else {
           const newUser = {
             username: username,
@@ -71,7 +73,7 @@ const SignUp = () => {
         <div>
           <div className="label-text">Enter Username: <input className="input-field" value={username} onChange={usernameUpdate}/></div>
           <div className="label-text">Enter Password: <input className="input-field" value={displayPassword} onChange={passwordUpdate}/></div>
-        </div>
+          </div>
         <div>
           <button className="submit-login" type="submit">Sign Up</button>
         </div>

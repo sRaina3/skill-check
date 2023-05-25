@@ -80,7 +80,7 @@ const ScrambledTypeNorm = () => {
 
   if (displayText.length !== 0 && curIndex >= displayText.length) {
     const updatedUser = JSON.parse(JSON.stringify(userAccount))
-    updatedUser.skillCoins += ((timeTaken * displayText.length) ** 2.9) / 100000000
+    updatedUser.skillCoins += ((timeTaken * displayText.length) ** 3.05) / 100000000
     if (timeTaken * displayText.length > userAccount.scramNScore) {
       updatedUser.scramNScore = timeTaken * displayText.length
     }
@@ -90,7 +90,7 @@ const ScrambledTypeNorm = () => {
       })
     return (
       <div className='text'>
-        <h1 className='coin-display'>+ {Number((((timeTaken * displayText.length) ** 2.9) / 100000000).toFixed(3))} Skill Coins</h1>
+        <h1 className='coin-display'>+ {Number((((timeTaken * displayText.length) ** 3.05) / 100000000).toFixed(3))} Skill Coins</h1>
         <button className="home-button" onClick={handleTryAgain}>Play Again</button>
         <h1 className='score-display'>You Won with {timeTaken} seconds left!</h1>
       </div>

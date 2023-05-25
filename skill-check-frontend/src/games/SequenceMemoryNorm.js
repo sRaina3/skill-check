@@ -61,7 +61,7 @@ const SequenceMemoryNorm = () => {
       setRoundChange(true)
     } else {
       const updatedUser = JSON.parse(JSON.stringify(userAccount))
-      updatedUser.skillCoins += ((roundCount - 1) ** 2) / 100
+      updatedUser.skillCoins += ((roundCount - 1) ** 2) / 30
       if (roundCount - 1 > userAccount.seqNScore) {
         updatedUser.seqNScore = roundCount - 1
       }
@@ -71,7 +71,7 @@ const SequenceMemoryNorm = () => {
         })
       return (
         <div>
-          <h1 className='coin-display'>+ {Number((((roundCount - 1) ** 2) / 100).toFixed(3))} Skill Coins</h1>
+          <h1 className='coin-display'>+ {Number((((roundCount - 1) ** 2) / 30).toFixed(3))} Skill Coins</h1>
           <h1 className='score-display'>Score: {roundCount - 1}</h1>
           <button className="home-button" onClick={handleTryAgain}>Try Again</button>
         </div>
@@ -79,7 +79,7 @@ const SequenceMemoryNorm = () => {
     }
   } else if (correctSquares[userSquares.length-1] !== userSquares[userSquares.length-1]) {
     const updatedUser = JSON.parse(JSON.stringify(userAccount))
-    updatedUser.skillCoins += ((roundCount - 1) ** 2) / 100
+    updatedUser.skillCoins += ((roundCount - 1) ** 2) / 30
     if (roundCount - 1 > userAccount.seqNScore) {
       updatedUser.seqNScore = roundCount - 1
     }
@@ -89,7 +89,7 @@ const SequenceMemoryNorm = () => {
       })
     return (
       <div>
-        <h1 className='coin-display'>+ {Number((((roundCount - 1) ** 2) / 100).toFixed(3))} Skill Coins</h1>
+        <h1 className='coin-display'>+ {Number((((roundCount - 1) ** 2) / 30).toFixed(3))} Skill Coins</h1>
         <h1 className='score-display'>Score: {roundCount - 1}</h1>
         <button className="home-button" onClick={handleTryAgain}>Try Again</button>
       </div>
