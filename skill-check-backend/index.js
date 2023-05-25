@@ -3,6 +3,7 @@ const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
 const User = require('./models/user')
+const Word = require('./models/word');
 
 const app = express()
 
@@ -65,6 +66,21 @@ app.put('/api/users/:id', (request, response, next) => {
     })
     .catch(error => next(error))
 })
+
+
+/* Words Collection */
+
+
+app.get('/api/word/random', (request, response) => {
+  const randomIndex = Math.floor(Math.random() * count);
+  Word.findOne().skip(randomIndex).exec((error, entry) => {
+    if (error) {
+      response.status(500).json({ error: 'Could not find an entry' });
+    } else {
+      response.json(entry);
+    }
+  });
+});
 
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: 'unknown endpoint' })

@@ -44,6 +44,14 @@ const App = () => {
     }
   }
 
+  const handleWordFreq = () => {
+    if (difficulty === 'normal') {
+      navigate('/WordFreqNorm')
+    } else {
+      navigate('/WordFreqNorm')
+    }
+  }
+
   const handleNormalMode = () => {
     setDifficulty('normal')
   }
@@ -80,6 +88,7 @@ const App = () => {
           <button className="signup-button" onClick={handleLogOut}>Log Out</button>
           <button className="game-button" onClick={handleSeq}>Sequence Memory</button>
           <button className="game-button" onClick={handleType}>Scrambled Type Test</button>
+          <button className="game-button" onClick={handleWordFreq}>Word Frequency</button>
           <div>
             <h1 className="title-text">Select Mode</h1>
             <button className={`mode-button normal ${difficulty === 'normal' ? 'fiery-border' : ''}`} onClick={handleNormalMode}>Normal</button>
