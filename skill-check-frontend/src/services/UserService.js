@@ -17,6 +17,11 @@ const updateUser = (updatedUser) => {
   return request.then(response => response.data)
 }
 
-const userService = {getUsers, addUser, updateUser}
+const getRandomWord = () => {
+  const request = axios.get(baseURL + 'api/words/random')
+  return request.then(response => response.data)
+}
+
+const userService = {getUsers, addUser, updateUser, getRandomWord}
 
 export default userService

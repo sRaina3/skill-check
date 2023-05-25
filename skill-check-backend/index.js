@@ -71,7 +71,7 @@ app.put('/api/users/:id', (request, response, next) => {
 /* Words Collection */
 
 
-app.get('/api/word/random', (request, response) => {
+app.get('/api/words/random', (request, response) => {
   const randomIndex = Math.floor(Math.random() * count);
   Word.findOne().skip(randomIndex).exec((error, entry) => {
     if (error) {
@@ -80,6 +80,12 @@ app.get('/api/word/random', (request, response) => {
       response.json(entry);
     }
   });
+});
+
+app.get('/api/words', (request, response) => {
+  Word.find({}).then(words => { 
+    response.json(words)
+  })
 });
 
 const unknownEndpoint = (request, response) => {

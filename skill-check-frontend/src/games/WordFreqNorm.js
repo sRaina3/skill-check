@@ -1,5 +1,4 @@
 // API Used: https://www.datamuse.com/api/
-// API Used: http://random-word-api.herokuapp.com/home
 import {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
@@ -26,11 +25,13 @@ const WordFreqNorm = () => {
   };
 
   useEffect(() => {
-    axios
-      .get('https://random-word-api.herokuapp.com/word?number=20')
-      .then(response => {
-        console.log(response.data)
-        setComparedWords(response.data.content)
+    userService.getRandomWord()
+      .then(word => {
+        console.log(word)
+      })
+    userService.getRandomWord()
+      .then(word => {
+        console.log(word)
       })
   }, []);
 
