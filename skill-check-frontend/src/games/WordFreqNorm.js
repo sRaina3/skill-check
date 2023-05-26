@@ -32,12 +32,32 @@ const WordFreqNorm = () => {
     userService.getRandomWord()
       .then(word => {
         setWordOne(word[0].word)
+        axios.get(`https://api.datamuse.com/words?sp=${word[0].word}&md=f&max=1`)
+          .then(response => {
+            const string = response.data[0].tags[0]
+            const freq = Number(string.substring(2, string.length))
+            setFreqOne(freq)
+          })
       })
     userService.getRandomWord()
       .then(word => {
         setWordTwo(word[0].word)
+        axios.get(`https://api.datamuse.com/words?sp=${word[0].word}&md=f&max=1`)
+          .then(response => {
+            const string = response.data[0].tags[0]
+            const freq = Number(string.substring(2, string.length))
+            setFreqTwo(freq)
+          })
       })
   }, []);
+
+  const handleHigherClick = () => {
+
+  }
+
+  const handleLowerClick = () => {
+
+  }
 
   return (
     <div>
@@ -46,12 +66,13 @@ const WordFreqNorm = () => {
       <div className="highscore">{userAccount.username === 'Guest' ? 'Login to Save Score' : `Highscore:  ${userAccount.scramNScore}`}</div>
       <div className="word-box-left">{wordOne}</div>
       <div className="has-left-text">has</div>
+      <div className="freq-one">{freqOne}</div>
       <div className="freq-left-text">use frequency per 1 million words</div> 
       <div>
         <div className="word-box-right">{wordTwo}</div>
         <div className="has-right-text">has</div>
-        <button className="higher-button">Higher</button>
-        <button className="lower-button">Lower</button>
+        <button className="higher-button" onClick={handleHigherClick}>Higher</button>
+        <button className="lower-button" onClick={handleLowerClick}>Lower</button>
         <div className="freq-right-text">use frequency than <span className="underline">{wordOne}</span></div>
       </div>
     </div>
