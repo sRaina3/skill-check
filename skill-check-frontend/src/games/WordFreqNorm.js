@@ -79,6 +79,15 @@ const WordFreqNorm = () => {
           })
       })
     } else {
+      const updatedUser = JSON.parse(JSON.stringify(userAccount))
+      updatedUser.skillCoins += (score ** 2.5) / 100
+      if (score > userAccount.wordfreqNScore) {
+        updatedUser.wordfreqScore = score
+      }
+      userService.updateUser(updatedUser)
+        .then(user => {
+          localStorage.setItem('userAccount', JSON.stringify(updatedUser));
+        })
       setGameOver(true)
     }
   }
@@ -100,6 +109,15 @@ const WordFreqNorm = () => {
           })
       })
     } else {
+      const updatedUser = JSON.parse(JSON.stringify(userAccount))
+      updatedUser.skillCoins += (score ** 2.5) / 100
+      if (score > userAccount.wordfreqNScore) {
+        updatedUser.wordfreqScore = score
+      }
+      userService.updateUser(updatedUser)
+        .then(user => {
+          localStorage.setItem('userAccount', JSON.stringify(updatedUser));
+        })
       setGameOver(true)
     }
   }
@@ -107,6 +125,7 @@ const WordFreqNorm = () => {
   if (gameOver) {
     return (
       <div>
+        <h1 className='coin-display'>+ {Number((((score) ** 2.5) / 100).toFixed(3))} Skill Coins</h1>
         <h1 className='score-display-wordfreq'>Score: {score}</h1>
         <button className="home-button" onClick={handleTryAgain}>Try Again</button>
         <Instruction/>
