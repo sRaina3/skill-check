@@ -16,6 +16,7 @@ const WordFreqNorm = () => {
   const [freqTwo, setFreqTwo] = useState()
   const [score, setScore] = useState(0)
   const [gameOver, setGameOver] = useState(false)
+  const [gameReset, setGameReset] = useState(0)
   const [userAccount, setUserAccount] = useState({username: 'Guest'})
 
   useEffect(() => {
@@ -53,10 +54,11 @@ const WordFreqNorm = () => {
             setFreqTwo(freq)
           })
       })
-  }, [gameOver]);
+  }, [gameReset]);
 
   const handleTryAgain = () => {
     setGameOver(false)
+    setGameReset(gameReset+1)
     setScore(0)
   }
 
@@ -105,8 +107,19 @@ const WordFreqNorm = () => {
   if (gameOver) {
     return (
       <div>
-        <h1 className='score-display'>Score: {score}</h1>
+        <h1 className='score-display-wordfreq'>Score: {score}</h1>
         <button className="home-button" onClick={handleTryAgain}>Try Again</button>
+        <Instruction/>
+        <div className="highscore">{userAccount.username === 'Guest' ? 'Login to Save Score' : `Highscore:  ${userAccount.scramNScore}`}</div>
+        <div className="word-box-left">{wordOne}</div>
+        <div className="has-left-text">has</div>
+        <div className="freq-one">{freqOne}</div>
+        <div className="freq-left-text">occurances per 1 million words</div> 
+
+        <div className="word-box-right">{wordTwo}</div>
+        <div className="has-right-text">has</div>
+        <div className="freq-two">{freqTwo}</div>
+        <div className="freq-rightlose-text">occurances per 1 million words</div>
       </div>
     )
   } else {
@@ -119,7 +132,7 @@ const WordFreqNorm = () => {
         <div className="word-box-left">{wordOne}</div>
         <div className="has-left-text">has</div>
         <div className="freq-one">{freqOne}</div>
-        <div className="freq-left-text">use frequency per 1 million words</div> 
+        <div className="freq-left-text">occurances per 1 million words</div> 
         <div>
           <div className="word-box-right">{wordTwo}</div>
           <div className="has-right-text">has</div>
