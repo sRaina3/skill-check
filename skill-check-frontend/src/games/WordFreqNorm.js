@@ -14,6 +14,7 @@ const WordFreqNorm = () => {
   const [wordTwo, setWordTwo] = useState()
   const [freqOne, setFreqOne] = useState()
   const [freqTwo, setFreqTwo] = useState()
+  const [score, setScore] = useState(0)
   const [userAccount, setUserAccount] = useState({username: 'Guest'})
 
   useEffect(() => {
@@ -35,7 +36,8 @@ const WordFreqNorm = () => {
         axios.get(`https://api.datamuse.com/words?sp=${word[0].word}&md=f&max=1`)
           .then(response => {
             const string = response.data[0].tags[0]
-            const freq = Number(string.substring(2, string.length))
+            const freq = Number(Number(string.substring(2, string.length)).toFixed(3))
+            console.log("freq 1: " + freq)
             setFreqOne(freq)
           })
       })
@@ -45,23 +47,55 @@ const WordFreqNorm = () => {
         axios.get(`https://api.datamuse.com/words?sp=${word[0].word}&md=f&max=1`)
           .then(response => {
             const string = response.data[0].tags[0]
-            const freq = Number(string.substring(2, string.length))
+            const freq = Number(Number(string.substring(2, string.length)).toFixed(3))
+            console.log("freq 2: " + freq)
             setFreqTwo(freq)
           })
       })
   }, []);
 
   const handleHigherClick = () => {
-
+    if (freqTwo >= freqOne) {
+      setScore(score + 1)
+      setWordOne(wordTwo)
+      setFreqOne(freqTwo)
+      userService.getRandomWord()
+      .then(word => {
+        setWordTwo(word[0].word)
+        axios.get(`https://api.datamuse.com/words?sp=${word[0].word}&md=f&max=1`)
+          .then(response => {
+            const string = response.data[0].tags[0]
+            const freq = Number(Number(string.substring(2, string.length)).toFixed(3))
+            console.log("freq 2: " + freq)
+            setFreqTwo(freq)
+          })
+      })
+    }
   }
 
   const handleLowerClick = () => {
-
+    if (freqTwo <= freqOne) {
+      setScore(score + 1)
+      setWordOne(wordTwo)
+      setFreqOne(freqTwo)
+      userService.getRandomWord()
+      .then(word => {
+        setWordTwo(word[0].word)
+        axios.get(`https://api.datamuse.com/words?sp=${word[0].word}&md=f&max=1`)
+          .then(response => {
+            const string = response.data[0].tags[0]
+            const freq = Number(Number(string.substring(2, string.length)).toFixed(3))
+            console.log("freq 2: " + freq)
+            setFreqTwo(freq)
+          })
+      })
+    }
   }
 
   return (
     <div>
       <button className="home-button" onClick={handleGoBack}>Home</button>
+      <h1 className="title">Score: {score}</h1>
       <Instruction/>
       <div className="highscore">{userAccount.username === 'Guest' ? 'Login to Save Score' : `Highscore:  ${userAccount.scramNScore}`}</div>
       <div className="word-box-left">{wordOne}</div>
