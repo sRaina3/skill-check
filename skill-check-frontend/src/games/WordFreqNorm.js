@@ -110,7 +110,7 @@ const WordFreqNorm = () => {
         <h1 className='score-display-wordfreq'>Score: {score}</h1>
         <button className="home-button" onClick={handleTryAgain}>Try Again</button>
         <Instruction/>
-        <div className="highscore">{userAccount.username === 'Guest' ? 'Login to Save Score' : `Highscore:  ${userAccount.scramNScore}`}</div>
+        <div className="highscore">{userAccount.username === 'Guest' ? 'Login to Save Score' : `Highscore:  ${userAccount.wordfreqNScore}`}</div>
         <div className="word-box-left">{wordOne}</div>
         <div className="has-left-text">has</div>
         <div className="freq-one">{freqOne}</div>
@@ -128,7 +128,7 @@ const WordFreqNorm = () => {
         <button className="home-button" onClick={handleGoBack}>Home</button>
         <h1 className="title">Score: {score}</h1>
         <Instruction/>
-        <div className="highscore">{userAccount.username === 'Guest' ? 'Login to Save Score' : `Highscore:  ${userAccount.scramNScore}`}</div>
+        <div className="highscore">{userAccount.username === 'Guest' ? 'Login to Save Score' : `Highscore:  ${userAccount.wordfreqNScore}`}</div>
         <div className="word-box-left">{wordOne}</div>
         <div className="has-left-text">has</div>
         <div className="freq-one">{freqOne}</div>

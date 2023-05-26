@@ -35,6 +35,7 @@ const SignUp = () => {
             seqCScore: 0,
             scramNScore: 0,
             scramCScore: 0,
+            wordfreqNScore: 0,
             skillCoins: 0
           }
           userService.addUser(newUser)
