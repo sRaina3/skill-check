@@ -15,6 +15,7 @@ const WordFreqNorm = () => {
   const [freqOne, setFreqOne] = useState()
   const [freqTwo, setFreqTwo] = useState()
   const [score, setScore] = useState(0)
+  const [gameOver, setGameOver] = useState(false)
   const [userAccount, setUserAccount] = useState({username: 'Guest'})
 
   useEffect(() => {
@@ -23,7 +24,7 @@ const WordFreqNorm = () => {
     if (storedUserAccount) {
       setUserAccount(JSON.parse(storedUserAccount));
     }
-  }, []);
+  }, [gameOver]);
 
   const handleGoBack = () => {
     navigate('/');
@@ -52,7 +53,12 @@ const WordFreqNorm = () => {
             setFreqTwo(freq)
           })
       })
-  }, []);
+  }, [gameOver]);
+
+  const handleTryAgain = () => {
+    setGameOver(false)
+    setScore(0)
+  }
 
   const handleHigherClick = () => {
     if (freqTwo >= freqOne) {
@@ -70,6 +76,8 @@ const WordFreqNorm = () => {
             setFreqTwo(freq)
           })
       })
+    } else {
+      setGameOver(true)
     }
   }
 
@@ -89,28 +97,39 @@ const WordFreqNorm = () => {
             setFreqTwo(freq)
           })
       })
+    } else {
+      setGameOver(true)
     }
   }
 
-  return (
-    <div>
-      <button className="home-button" onClick={handleGoBack}>Home</button>
-      <h1 className="title">Score: {score}</h1>
-      <Instruction/>
-      <div className="highscore">{userAccount.username === 'Guest' ? 'Login to Save Score' : `Highscore:  ${userAccount.scramNScore}`}</div>
-      <div className="word-box-left">{wordOne}</div>
-      <div className="has-left-text">has</div>
-      <div className="freq-one">{freqOne}</div>
-      <div className="freq-left-text">use frequency per 1 million words</div> 
+  if (gameOver) {
+    return (
       <div>
-        <div className="word-box-right">{wordTwo}</div>
-        <div className="has-right-text">has</div>
-        <button className="higher-button" onClick={handleHigherClick}>Higher</button>
-        <button className="lower-button" onClick={handleLowerClick}>Lower</button>
-        <div className="freq-right-text">use frequency than <span className="underline">{wordOne}</span></div>
+        <h1 className='score-display'>Score: {score}</h1>
+        <button className="home-button" onClick={handleTryAgain}>Try Again</button>
       </div>
-    </div>
-  )
+    )
+  } else {
+    return (
+      <div>
+        <button className="home-button" onClick={handleGoBack}>Home</button>
+        <h1 className="title">Score: {score}</h1>
+        <Instruction/>
+        <div className="highscore">{userAccount.username === 'Guest' ? 'Login to Save Score' : `Highscore:  ${userAccount.scramNScore}`}</div>
+        <div className="word-box-left">{wordOne}</div>
+        <div className="has-left-text">has</div>
+        <div className="freq-one">{freqOne}</div>
+        <div className="freq-left-text">use frequency per 1 million words</div> 
+        <div>
+          <div className="word-box-right">{wordTwo}</div>
+          <div className="has-right-text">has</div>
+          <button className="higher-button" onClick={handleHigherClick}>Higher</button>
+          <button className="lower-button" onClick={handleLowerClick}>Lower</button>
+          <div className="freq-right-text">use frequency than <span className="underline">{wordOne}</span></div>
+        </div>
+      </div>
+    )
+  }
 }
 
 export default WordFreqNorm
