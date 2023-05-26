@@ -12,6 +12,8 @@ const WordFreqNorm = () => {
 
   const [wordOne, setWordOne] = useState()
   const [wordTwo, setWordTwo] = useState()
+  const [freqOne, setFreqOne] = useState()
+  const [freqTwo, setFreqTwo] = useState()
   const [userAccount, setUserAccount] = useState({username: 'Guest'})
 
   useEffect(() => {
@@ -29,12 +31,10 @@ const WordFreqNorm = () => {
   useEffect(() => {
     userService.getRandomWord()
       .then(word => {
-        console.log(word[0].word)
         setWordOne(word[0].word)
       })
     userService.getRandomWord()
       .then(word => {
-        console.log(word[0].word)
         setWordTwo(word[0].word)
       })
   }, []);
@@ -45,7 +45,15 @@ const WordFreqNorm = () => {
       <Instruction/>
       <div className="highscore">{userAccount.username === 'Guest' ? 'Login to Save Score' : `Highscore:  ${userAccount.scramNScore}`}</div>
       <div className="word-box-left">{wordOne}</div>
-      <div className="word-box-right">{wordTwo}</div>
+      <div className="has-left-text">has</div>
+      <div className="freq-left-text">use frequency per 1 million words</div> 
+      <div>
+        <div className="word-box-right">{wordTwo}</div>
+        <div className="has-right-text">has</div>
+        <button className="higher-button">Higher</button>
+        <button className="lower-button">Lower</button>
+        <div className="freq-right-text">use frequency than <span className="underline">{wordOne}</span></div>
+      </div>
     </div>
   )
 }

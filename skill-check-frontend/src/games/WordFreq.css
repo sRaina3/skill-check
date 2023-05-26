@@ -1,8 +1,9 @@
 .word-box-left {
   position: absolute;
-  top: 100px;
-  left: 300px;
-  font-size: 24px;
+  top: 200px;
+  left: 400px;
+  transform: translate(-50%);
+  font-size: 36px;
   font-weight: bold;
   padding: 8px 12px;
   border-radius: 8px;
@@ -13,13 +14,104 @@
 
 .word-box-right {
   position: absolute;
-  top: 100px;
-  right: 300px;
-  font-size: 24px;
+  top: 200px;
+  right: 400px;
+  transform: translate(50%);
+  font-size: 36px;
   font-weight: bold;
   padding: 8px 12px;
   border-radius: 8px;
   background-color: #f0f0f0;
   color: #333;
   border: none;
+}
+
+.has-left-text {
+  text-align: center;
+  position: absolute;
+  top: 200px;
+  left: 400px;
+  transform: translate(-50%);
+  margin-top: 60px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #adaaaa;
+}
+
+.has-right-text {
+  text-align: center;
+  position: absolute;
+  top: 200px;
+  right: 400px;
+  transform: translate(50%);
+  margin-top: 60px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #adaaaa;
+}
+
+.higher-button {
+  position: absolute;
+  top: 200px;
+  right: 400px;
+  transform: translate(50%);
+  margin-top: 90px;
+  background-color: green;
+  border: 2px solid white;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.higher-button:hover {
+  background-color: #00cc00;
+}
+
+.lower-button {
+  position: absolute;
+  top: 200px;
+  right: 400px;
+  transform: translate(50%);
+  margin-top: 140px;
+  background-color: rgb(180, 8, 8);
+  border: 2px solid white;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.freq-left-text {
+  text-align: center;
+  position: absolute;
+  top: 200px;
+  left: 400px;
+  transform: translate(-50%);
+  margin-top: 190px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #adaaaa;
+}
+
+.freq-right-text {
+  text-align: center;
+  position: absolute;
+  top: 200px;
+  right: 400px;
+  transform: translate(50%);
+  margin-top: 190px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #adaaaa;
+}
+
+.lower-button:hover {
+  background-color: #fe0303;
+}
+
+.underline {
+  text-decoration: underline;
 }
