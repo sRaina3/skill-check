@@ -82,7 +82,7 @@ const WordFreqNorm = () => {
       const updatedUser = JSON.parse(JSON.stringify(userAccount))
       updatedUser.skillCoins += (score ** 2.5) / 100
       if (score > userAccount.wordfreqNScore) {
-        updatedUser.wordfreqScore = score
+        updatedUser.wordfreqNScore = score
       }
       userService.updateUser(updatedUser)
         .then(user => {
@@ -110,9 +110,9 @@ const WordFreqNorm = () => {
       })
     } else {
       const updatedUser = JSON.parse(JSON.stringify(userAccount))
-      updatedUser.skillCoins += (score ** 2.5) / 100
+      updatedUser.skillCoins += (score ** 2.4) / 100
       if (score > userAccount.wordfreqNScore) {
-        updatedUser.wordfreqScore = score
+        updatedUser.wordfreqNScore = score
       }
       userService.updateUser(updatedUser)
         .then(user => {

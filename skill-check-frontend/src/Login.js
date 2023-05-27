@@ -26,6 +26,9 @@ const Login = () => {
       .then(users => {
         const foundUser = users.find(u => u.username === username && u.password === password)
         if (foundUser) {
+          if (!foundUser.wordfreqNScore) {
+            foundUser.wordfreqNScore = 0
+          }
           // Save the user account in local storage
           localStorage.setItem('userAccount', JSON.stringify(foundUser));
           navigate('/')
