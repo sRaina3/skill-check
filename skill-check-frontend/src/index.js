@@ -12,7 +12,7 @@ import SignUp from './Signup'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Router>
+  <Router basename="/skill-check">
     <Routes>
       <Route path="*" element={<App/>} />
       <Route path="/SequenceMemoryChal" element={<SequenceMemoryChal />} />
