@@ -7,6 +7,10 @@ import userService from '../services/UserService'
 import Instruction from '../services/Instruction'
 import './ScrambledType.css'
 
+import Inst from '../images/ScrambType.png'
+import keyPressed from '../audio/KeyPressed.mp3'
+import roundPassed from '../audio/roundPassed.mp3'
+import failed from '../audio/failed.mp3'
 
 const ScrambledTypeNorm = () => {
   const keyboardKeys = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", "s", "d", "f", "g", "h", 
@@ -17,6 +21,10 @@ const ScrambledTypeNorm = () => {
   const [curIndex, setCurIndex] = useState(0)
   const [timeTaken, setTimeTaken] = useState(60)
   const [userAccount, setUserAccount] = useState({username: 'Guest'})
+
+  const [keyPressedSound] = useState(new Audio(keyPressed));
+  const [roundPassedSound] = useState(new Audio(roundPassed));
+  const [failedSound] = useState(new Audio(failed));
 
   useEffect(() => {
     // Retrieve the user account from local storage if logged in
@@ -73,21 +81,27 @@ const ScrambledTypeNorm = () => {
   const handleKeyPress = (key) => {
     shuffleArray(keyboardKeys);
     setScrambled([...keyboardKeys]);
-    if (key === displayText[curIndex]) { 
+    if (key === displayText[curIndex]) {
+      keyPressedSound.currentTime = 0;
+      keyPressedSound.play().catch((error) => {})
       setCurIndex(curIndex + 1)
     }
   }
 
   if (displayText.length !== 0 && curIndex >= displayText.length) {
+    keyPressedSound.pause()
+    roundPassedSound.play()
     const updatedUser = JSON.parse(JSON.stringify(userAccount))
     updatedUser.skillCoins += ((timeTaken * displayText.length) ** 3.05) / 100000000
     if (timeTaken * displayText.length > userAccount.scramNScore) {
       updatedUser.scramNScore = timeTaken * displayText.length
     }
-    userService.updateUser(updatedUser)
-      .then(user => {
-        localStorage.setItem('userAccount', JSON.stringify(updatedUser));
-      })
+    if (updatedUser.username !== 'Guest') {
+      userService.updateUser(updatedUser)
+        .then(user => {
+          localStorage.setItem('userAccount', JSON.stringify(updatedUser));
+        })
+    }
     return (
       <div className='text'>
         <h1 className='coin-display'>+ {Number((((timeTaken * displayText.length) ** 3.05) / 100000000).toFixed(3))} Skill Coins</h1>
@@ -99,7 +113,7 @@ const ScrambledTypeNorm = () => {
     return (
       <div>
         <button className="home-button" onClick={handleGoBack}>Home</button>
-        <Instruction/>
+        <Instruction content={Inst}/>
         <div className="highscore">{userAccount.username === 'Guest' ? 'Login to Save Score' : `Highscore:  ${userAccount.scramNScore}`}</div>
         <h1 className='text'>{timeTaken}</h1>
         <h1 className='text'>
@@ -116,6 +130,8 @@ const ScrambledTypeNorm = () => {
       </div>
     )
   } else {
+    keyPressedSound.pause()
+    failedSound.play()
     return (
       <div className='text'>
         <button className="home-button" onClick={handleTryAgain}>Try Again</button>
