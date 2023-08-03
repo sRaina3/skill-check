@@ -4,7 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import userService from '../services/UserService';
 import Instruction from '../services/Instruction';
 import './SequenceMemory.css';
+
 import Inst from '../images/SeqMem.png'
+import correctClick from '../audio/correctClick.mp3'
+import roundPassed from '../audio/roundPassed.mp3'
+import failed from '../audio/failed.mp3'
 
 const SequenceMemoryChal = () => {
   const [roundCount, setRound] = useState(0)
@@ -14,6 +18,10 @@ const SequenceMemoryChal = () => {
   const [clickedSquare, setClickedSq] = useState(0)
   const [roundChange, setRoundChange] = useState(true)
   const [userAccount, setUserAccount] = useState({username: 'Guest'})
+
+  const [correctClickSound] = useState(new Audio(correctClick));
+  const [roundPassedSound] = useState(new Audio(roundPassed));
+  const [failedSound] = useState(new Audio(failed));
 
   useEffect(() => {
     // Retrieve the user account from local storage if logged in
@@ -37,6 +45,10 @@ const SequenceMemoryChal = () => {
   }
 
   const handleClick = (e) => {
+    if (correctSquares.length-1 !== userSquares.length) {
+      correctClickSound.currentTime = 0;
+      correctClickSound.play().catch((error) => {})
+    }
     setUser(userSquares.concat(parseInt(e.target.id)))
     setClicked('green');
     setClickedSq(parseInt(e.target.id))
@@ -56,18 +68,22 @@ const SequenceMemoryChal = () => {
     setRound(roundCount + 1)
   } else if (correctSquares.length === userSquares.length) {
     if (correctSquares[userSquares.length-1] === userSquares[userSquares.length-1]) {
+      roundPassedSound.play()
       setUser([])
       setRoundChange(true)
     } else {
+      failedSound.play()
       const updatedUser = JSON.parse(JSON.stringify(userAccount))
       updatedUser.skillCoins += ((roundCount - 1) ** 2) / 20
       if (roundCount - 1 > userAccount.seqCScore) {
         updatedUser.seqCScore = roundCount - 1
       }
-      userService.updateUser(updatedUser)
-        .then(user => {
-          localStorage.setItem('userAccount', JSON.stringify(updatedUser));
-        })
+      if (updatedUser.username !== 'Guest') {
+        userService.updateUser(updatedUser)
+          .then(user => {
+            localStorage.setItem('userAccount', JSON.stringify(updatedUser));
+          })
+      }
       return (
         <div>
           <h1 className='coin-display'>+ {Number((((roundCount - 1) ** 2) / 20).toFixed(3))} Skill Coins</h1>
@@ -77,15 +93,19 @@ const SequenceMemoryChal = () => {
       )
     }
   } else if (correctSquares[userSquares.length-1] !== userSquares[userSquares.length-1]) {
+    correctClickSound.pause()
+    failedSound.play()
     const updatedUser = JSON.parse(JSON.stringify(userAccount))
     updatedUser.skillCoins += ((roundCount - 1) ** 2) / 20
     if (roundCount - 1 > userAccount.seqCScore) {
       updatedUser.seqCScore = roundCount - 1
     }
-    userService.updateUser(updatedUser)
-      .then(user => {
-        localStorage.setItem('userAccount', JSON.stringify(updatedUser));
-      })
+    if (updatedUser.username !== 'Guest') {
+      userService.updateUser(updatedUser)
+        .then(user => {
+          localStorage.setItem('userAccount', JSON.stringify(updatedUser));
+        })
+    }
     return (
       <div>
         <h1 className='coin-display'>+ {Number((((roundCount - 1) ** 2) / 20).toFixed(3))} Skill Coins</h1>
