@@ -7,6 +7,10 @@ import userService from '../services/UserService'
 import Instruction from '../services/Instruction'
 import './WordFreq.css'
 
+import Inst from '../images/WordFreq.png'
+import roundPassed from '../audio/roundPassed.mp3'
+import failed from '../audio/failed.mp3'
+
 const WordFreqNorm = () => {
   const navigate = useNavigate();
 
@@ -18,6 +22,9 @@ const WordFreqNorm = () => {
   const [gameOver, setGameOver] = useState(false)
   const [gameReset, setGameReset] = useState(0)
   const [userAccount, setUserAccount] = useState({username: 'Guest'})
+
+  const [roundPassedSound] = useState(new Audio(roundPassed));
+  const [failedSound] = useState(new Audio(failed));
 
   useEffect(() => {
     // Retrieve the user account from local storage if logged in
@@ -39,7 +46,6 @@ const WordFreqNorm = () => {
           .then(response => {
             const string = response.data[0].tags[0]
             const freq = Number(Number(string.substring(2, string.length)).toFixed(3))
-            console.log("freq 1: " + freq)
             setFreqOne(freq)
           })
       })
@@ -50,7 +56,6 @@ const WordFreqNorm = () => {
           .then(response => {
             const string = response.data[0].tags[0]
             const freq = Number(Number(string.substring(2, string.length)).toFixed(3))
-            console.log("freq 2: " + freq)
             setFreqTwo(freq)
           })
       })
@@ -64,6 +69,7 @@ const WordFreqNorm = () => {
 
   const handleHigherClick = () => {
     if (freqTwo >= freqOne) {
+      roundPassedSound.play()
       setScore(score + 1)
       setWordOne(wordTwo)
       setFreqOne(freqTwo)
@@ -74,26 +80,29 @@ const WordFreqNorm = () => {
           .then(response => {
             const string = response.data[0].tags[0]
             const freq = Number(Number(string.substring(2, string.length)).toFixed(3))
-            console.log("freq 2: " + freq)
             setFreqTwo(freq)
           })
       })
     } else {
+      failedSound.play()
       const updatedUser = JSON.parse(JSON.stringify(userAccount))
       updatedUser.skillCoins += (score ** 2.5) / 100
       if (score > userAccount.wordfreqNScore) {
         updatedUser.wordfreqNScore = score
       }
-      userService.updateUser(updatedUser)
-        .then(user => {
-          localStorage.setItem('userAccount', JSON.stringify(updatedUser));
-        })
+      if (updatedUser.username !== 'Guest') {
+        userService.updateUser(updatedUser)
+          .then(user => {
+            localStorage.setItem('userAccount', JSON.stringify(updatedUser));
+          })
+      }
       setGameOver(true)
     }
   }
 
   const handleLowerClick = () => {
     if (freqTwo <= freqOne) {
+      roundPassedSound.play()
       setScore(score + 1)
       setWordOne(wordTwo)
       setFreqOne(freqTwo)
@@ -104,20 +113,22 @@ const WordFreqNorm = () => {
           .then(response => {
             const string = response.data[0].tags[0]
             const freq = Number(Number(string.substring(2, string.length)).toFixed(3))
-            console.log("freq 2: " + freq)
             setFreqTwo(freq)
           })
       })
     } else {
+      failedSound.play()
       const updatedUser = JSON.parse(JSON.stringify(userAccount))
       updatedUser.skillCoins += (score ** 2.4) / 100
       if (score > userAccount.wordfreqNScore) {
         updatedUser.wordfreqNScore = score
       }
-      userService.updateUser(updatedUser)
-        .then(user => {
-          localStorage.setItem('userAccount', JSON.stringify(updatedUser));
-        })
+      if (updatedUser.username !== 'Guest') {
+        userService.updateUser(updatedUser)
+          .then(user => {
+            localStorage.setItem('userAccount', JSON.stringify(updatedUser));
+          })
+      }
       setGameOver(true)
     }
   }
@@ -128,7 +139,7 @@ const WordFreqNorm = () => {
         <h1 className='coin-display'>+ {Number((((score) ** 2.5) / 100).toFixed(3))} Skill Coins</h1>
         <h1 className='score-display-wordfreq'>Score: {score}</h1>
         <button className="home-button" onClick={handleTryAgain}>Try Again</button>
-        <Instruction/>
+        <Instruction content={Inst}/>
         <div className="highscore">{userAccount.username === 'Guest' ? 'Login to Save Score' : `Highscore:  ${userAccount.wordfreqNScore}`}</div>
         <div className="word-box-left">{wordOne}</div>
         <div className="has-left-text">has</div>
@@ -146,7 +157,7 @@ const WordFreqNorm = () => {
       <div>
         <button className="home-button" onClick={handleGoBack}>Home</button>
         <h1 className="title">Score: {score}</h1>
-        <Instruction/>
+        <Instruction content={Inst}/>
         <div className="highscore">{userAccount.username === 'Guest' ? 'Login to Save Score' : `Highscore:  ${userAccount.wordfreqNScore}`}</div>
         <div className="word-box-left">{wordOne}</div>
         <div className="has-left-text">has</div>
